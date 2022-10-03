@@ -2,6 +2,8 @@ import logging
 from telegram import ReplyKeyboardMarkup, Update, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, CallbackContext, ConversationHandler, MessageHandler, Filters
 import Token
+from os import listdir
+import random
 
 # Enable logging
 logging.basicConfig(
@@ -44,8 +46,9 @@ def giorgio(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F441\U0001F444\U0001F441")
 
 
-def allahuakbar(update: Update, context: CallbackContext):
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/bar.jpeg', 'rb'))
+def scap(update: Update, context: CallbackContext):
+    photo_list = listdir('cazzate/scap')
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + random.choice(photo_list), 'rb'))
 
 
 ### START ###
@@ -62,7 +65,7 @@ dispatcher.add_handler(CommandHandler("arco", arco))
 dispatcher.add_handler(CommandHandler("lucio", lucio))
 dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("giorgio", giorgio))
-dispatcher.add_handler(CommandHandler("allahuakbar", allahuakbar))
+dispatcher.add_handler(CommandHandler("scap", scap))
 
 dispatcher.add_error_handler(error_handler)
 
