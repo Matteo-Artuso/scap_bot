@@ -3,7 +3,6 @@ from telegram import ReplyKeyboardMarkup, Update, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, CallbackContext, ConversationHandler, MessageHandler, Filters
 import Token
 
-
 # Enable logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
