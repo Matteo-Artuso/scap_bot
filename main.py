@@ -47,7 +47,17 @@ def giorgio(update: Update, context: CallbackContext):
 
 
 def scap(update: Update, context: CallbackContext):
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + random.choice(listdir('cazzate/scap')), 'rb'))
+    scap_img_list = listdir('cazzate/scap')
+    lung = len(scap_img_list)
+    lung = lung-1
+    weights = []
+    for img in scap_img_list:
+        if img == 'magni.jpeg':
+            weights.append(0.01)
+        else:
+            weights.append(0.99 / lung)
+    scelta = random.choices(population=scap_img_list, weights=weights)
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(scelta), 'rb'))
 
 
 ### START ###
