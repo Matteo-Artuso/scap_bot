@@ -45,7 +45,7 @@ def giorgio(update: Update, context: CallbackContext):
 
 
 def allahuakbar(update: Update, context: CallbackContext):
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/allahuakbar.jpeg', 'rb'))
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/bar.jpeg', 'rb'))
 
 
 ### START ###
