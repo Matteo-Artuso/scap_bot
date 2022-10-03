@@ -25,6 +25,31 @@ def start(update: Update, context: CallbackContext):
     update.message.reply_text(f"Hi {user.first_name}!")
 
 
+def aule_libere(update: Update, context: CallbackContext):
+    with open('orari/aule_libere.txt') as f:
+        text = f.readlines()
+    context.bot.send_message(chat_id=update.effective_chat.id, text=text)
+
+
+def aule_libere_update(update: Update, context: CallbackContext):
+    user = update.effective_user
+    if user.first_name == 'Artuzzo':
+        with open('orari/aule_libere.txt') as f:
+            text = f.readlines()
+        context.bot.send_message(chat_id=update.effective_chat.id, text=text)
+        context.bot.send_message(chat_id=update.effective_chat.id, text="rispondi a questo msg con il nuovo orario")
+        return 0
+    update.message.reply_text("utente non autorizzato")
+    return ConversationHandler.END
+
+
+def aule_libere_updated(update: Update, context: CallbackContext):
+    with open('readme.txt', 'w') as f:
+        f.write(update.message.text)
+    update.effective_message.reply_text("ok")
+    return ConversationHandler.END
+
+
 def barletz(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="ma ti dai fuoco")
     context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F525")
@@ -62,6 +87,12 @@ def scap(update: Update, context: CallbackContext):
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(scelta), 'rb'))
 
 
+# unused function but necessary as fallback
+def cancel(update: Update, context: CallbackContext):
+    update.effective_message.reply_text("command canceled", reply_markup=ReplyKeyboardRemove())
+    return ConversationHandler.END
+
+
 ### START ###
 # Create the Updater and pass it your bot token.
 updater = Updater(Token.token)
@@ -70,13 +101,23 @@ updater = Updater(Token.token)
 dispatcher = updater.dispatcher
 
 # handlers
+aule_libere_update_handler = ConversationHandler(
+    entry_points=[CommandHandler("aule_libere_update", aule_libere_update)],
+    states={
+        0: [MessageHandler(Filters.text & ~Filters.command, aule_libere_updated)],
+    },
+    fallbacks=[CommandHandler('cancel', cancel)]
+)
+
 dispatcher.add_handler(CommandHandler("start", start))
+dispatcher.add_handler(CommandHandler("aule_libere", aule_libere))
 dispatcher.add_handler(CommandHandler("barletz", barletz))
 dispatcher.add_handler(CommandHandler("arco", arco))
 dispatcher.add_handler(CommandHandler("lucio", lucio))
 dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("giorgio", giorgio))
 dispatcher.add_handler(CommandHandler("scap", scap))
+dispatcher.add_handler(aule_libere_update_handler)
 
 dispatcher.add_error_handler(error_handler)
 
