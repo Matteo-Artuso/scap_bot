@@ -34,7 +34,7 @@ def arco(update: Update, context: CallbackContext):
 
 
 def lucio(update: Update, context: CallbackContext):
-    context.bot.send_audio(chat_id=update.effective_chat.id, audio=open('lucio.mp3', 'rb'))
+    context.bot.send_audio(chat_id=update.effective_chat.id, audio=open('cazzate/lucio.mp3', 'rb'))
 
 
 def heroku(update: Update, context: CallbackContext):
