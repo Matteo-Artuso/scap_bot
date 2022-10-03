@@ -47,8 +47,7 @@ def giorgio(update: Update, context: CallbackContext):
 
 
 def scap(update: Update, context: CallbackContext):
-    photo_list = listdir('cazzate/scap')
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + random.choice(photo_list), 'rb'))
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + random.choice(listdir('cazzate/scap')), 'rb'))
 
 
 ### START ###
