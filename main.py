@@ -45,6 +45,10 @@ def giorgio(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F441\U0001F444\U0001F441")
 
 
+def allahuakbar(update: Update, context: CallbackContext):
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo='cazzate/allahuakbar.png')
+
+
 ### START ###
 # Create the Updater and pass it your bot token.
 updater = Updater(Token.token)
@@ -59,6 +63,7 @@ dispatcher.add_handler(CommandHandler("arco", arco))
 dispatcher.add_handler(CommandHandler("lucio", lucio))
 dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("giorgio", giorgio))
+dispatcher.add_handler(CommandHandler("allahuakbar", allahuakbar))
 
 dispatcher.add_error_handler(error_handler)
 
