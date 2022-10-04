@@ -66,5 +66,27 @@ orario = {
             '15': '26.0.1 - rf systems',
             '16': '26.0.1 - rf systems',
         }
+    },
+    'barletz': {
+        '0': {
+            '13': '3.1.9 - topologia algebrica',
+            '14': '3.1.9 - topologia algebrica',
+        },
+        '2': {
+            '10': 'B.5.5 - topologia algebrica',
+            '11': 'B.5.5 - topologia algebrica',
+            '12': 'B.5.5 - topologia algebrica',
+        },
+        '3': {
+            '13': 'B architettura - topologia algebrica',
+            '14': 'B architettura - topologia algebrica',
+            '16': '26.0.4 - LeA 2',
+            '17': '26.0.4 - LeA 2',
+        },
+        '4': {
+            '16': 'T.0.1 - LeA 2',
+            '17': 'T.0.1 - LeA 2',
+            '18': 'T.0.1 - LeA 2',
+        }
     }
 }

@@ -53,7 +53,7 @@ def aule_libere_updated(update: Update, context: CallbackContext):
 
 
 def dov_e(update: Update, context: CallbackContext):
-    keyboard = ['artuzzo', 'giulio']
+    keyboard = ['artuzzo', 'giulio', 'barletz']
     update.message.reply_text("chi vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
     return 0
 
