@@ -33,7 +33,7 @@ def aule_libere(update: Update, context: CallbackContext):
 
 def aule_libere_update(update: Update, context: CallbackContext):
     user = update.effective_user
-    if user.name == 'Artuzzo' or user.name == 'giu176' or user.name == 'andrebarl':
+    if user.name == '@Artuzzo' or user.name == '@giu176' or user.name == '@andrebarl':
         with open('orari/aule_libere.txt') as f:
             text = f.read()
         context.bot.send_message(chat_id=update.effective_chat.id, text=text)
