@@ -4,7 +4,7 @@ from telegram.ext import Updater, CommandHandler, CallbackContext, ConversationH
 import Token
 from os import listdir
 import random
-import orari.dov_e as orari
+import orari.orario as orari
 import datetime
 
 # Enable logging
@@ -15,17 +15,17 @@ logger = logging.getLogger(__name__)
 
 
 # UTILITY FUNCTIONS
-def weekday_to_num(day):
-    if day == 'LUN':
-        return '0'
-    if day == 'MAR':
-        return '1'
-    if day == 'MER':
-        return '2'
-    if day == 'GIO':
-        return '3'
-    if day == 'VEN':
-        return '4'
+def num_to_weekday(day):
+    if day == 0:
+        return 'LUN'
+    if day == 1:
+        return 'MAR'
+    if day == 2:
+        return 'MER'
+    if day == 3:
+        return 'GIO'
+    if day == 4:
+        return 'VEN'
 
 
 # BOT HANDLERS FUNCTIONS
@@ -102,9 +102,9 @@ def che_giorno(update: Update, context: CallbackContext):
 def che_ora(update: Update, context: CallbackContext):
     global giorno
     if update.message.text == 'oggi':
-        giorno = str(datetime.datetime.today().weekday())
+        giorno = num_to_weekday(datetime.datetime.today().weekday())
     else:
-        giorno = weekday_to_num(update.message.text)
+        giorno = update.message.text
     if giorno not in orari.orario[chi].keys():
         update.effective_message.reply_text(giorno + " " + chi + " non ha lezione", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
@@ -117,7 +117,7 @@ def chi_sara(update: Update, context: CallbackContext):
     global chi, giorno
     ora = update.message.text
     if ora not in orari.orario[chi][giorno].keys():
-        update.effective_message.reply_text("alle " + ora + " " + chi + " non ha lezione", reply_markup=ReplyKeyboardRemove())
+        update.effective_message.reply_text(giorno + " alle " + ora + " " + chi + " non ha lezione", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
     update.effective_message.reply_text(orari.orario[chi][giorno][ora], reply_markup=ReplyKeyboardRemove())
     chi = ''
