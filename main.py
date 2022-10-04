@@ -14,6 +14,20 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+# UTILITY FUNCTIONS
+def weekday_to_num(day):
+    if day == 'LUN':
+        return '0'
+    if day == 'MAR':
+        return '1'
+    if day == 'MER':
+        return '2'
+    if day == 'GIO':
+        return '3'
+    if day == 'VEN':
+        return '4'
+
+
 # BOT HANDLERS FUNCTIONS
 def error_handler(update: Update, context: CallbackContext) -> None:
     """Log the error and send a telegram message"""
@@ -52,22 +66,62 @@ def aule_libere_updated(update: Update, context: CallbackContext):
     return ConversationHandler.END
 
 
-def dov_e(update: Update, context: CallbackContext):
+def dov_e_ora(update: Update, context: CallbackContext):
     keyboard = [['artuzzo'], ['giulio'], ['barletz']]
     update.message.reply_text("chi vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
     return 0
 
 
-def chi(update: Update, context: CallbackContext):
-    giorno = datetime.datetime.today().weekday()
+def chi_ora(update: Update, context: CallbackContext):
+    giorno_ora = datetime.datetime.today().weekday()
     now = datetime.datetime.now()
-    if str(giorno) not in orari.orario[update.message.text].keys():
+    if str(giorno_ora) not in orari.orario[update.message.text].keys():
         update.effective_message.reply_text("oggi non ha lezione", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
-    if str(now.hour) not in orari.orario[update.message.text][str(giorno)].keys():
+    if str(now.hour) not in orari.orario[update.message.text][str(giorno_ora)].keys():
         update.effective_message.reply_text("ora non ha lezione", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
-    update.effective_message.reply_text(orari.orario[update.message.text][str(giorno)][str(now.hour)], reply_markup=ReplyKeyboardRemove())
+    update.effective_message.reply_text(orari.orario[update.message.text][str(giorno_ora)][str(now.hour)], reply_markup=ReplyKeyboardRemove())
+    return ConversationHandler.END
+
+
+def dove_sara(update: Update, context: CallbackContext):
+    keyboard = [['artuzzo'], ['giulio'], ['barletz']]
+    update.message.reply_text("chi vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
+    return 0
+
+
+def che_giorno(update: Update, context: CallbackContext):
+    global chi
+    chi = update.message.text
+    keyboard = [['oggi'], ['LUN'], ['MAR'], ['MER'], ['GIO'], ['VEN']]
+    update.message.reply_text("che giorno vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
+    return 1
+
+
+def che_ora(update: Update, context: CallbackContext):
+    global giorno
+    if update.message.text == 'oggi':
+        giorno = str(datetime.datetime.today().weekday())
+    else:
+        giorno = weekday_to_num(update.message.text)
+    if giorno not in orari.orario[chi].keys():
+        update.effective_message.reply_text(giorno + " " + chi + " non ha lezione", reply_markup=ReplyKeyboardRemove())
+        return ConversationHandler.END
+    keyboard = [['8', '9'], ['10', '11'], ['12', '13'], ['14', '15'], ['16', '17'], ['18', '19']]
+    update.message.reply_text("a che ora vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
+    return 2
+
+
+def chi_sara(update: Update, context: CallbackContext):
+    global chi, giorno
+    ora = update.message.text
+    if ora not in orari.orario[chi][giorno].keys():
+        update.effective_message.reply_text("alle " + ora + " " + chi + " non ha lezione", reply_markup=ReplyKeyboardRemove())
+        return ConversationHandler.END
+    update.effective_message.reply_text(orari.orario[chi][giorno][ora], reply_markup=ReplyKeyboardRemove())
+    chi = ''
+    giorno = ''
     return ConversationHandler.END
 
 
@@ -114,6 +168,8 @@ def cancel(update: Update, context: CallbackContext):
 
 
 ### START ###
+chi = ''
+giorno = ''
 # Create the Updater and pass it your bot token.
 updater = Updater(Token.token)
 
@@ -129,10 +185,20 @@ aule_libere_update_handler = ConversationHandler(
     fallbacks=[CommandHandler('cancel', cancel)]
 )
 
-dov_e_handler = ConversationHandler(
-    entry_points=[CommandHandler("dov_e", dov_e)],
+dov_e_ora_handler = ConversationHandler(
+    entry_points=[CommandHandler("dov_e_ora", dov_e_ora)],
     states={
-        0: [MessageHandler(Filters.text & ~Filters.command, chi)],
+        0: [MessageHandler(Filters.text & ~Filters.command, chi_ora)],
+    },
+    fallbacks=[CommandHandler('cancel', cancel)]
+)
+
+dove_sara_handler = ConversationHandler(
+    entry_points=[CommandHandler("dove_sara", dove_sara)],
+    states={
+        0: [MessageHandler(Filters.text & ~Filters.command, che_giorno)],
+        1: [MessageHandler(Filters.text & ~Filters.command, che_ora)],
+        2: [MessageHandler(Filters.text & ~Filters.command, chi_sara)],
     },
     fallbacks=[CommandHandler('cancel', cancel)]
 )
@@ -146,7 +212,8 @@ dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("giorgio", giorgio))
 dispatcher.add_handler(CommandHandler("scap", scap))
 dispatcher.add_handler(aule_libere_update_handler)
-dispatcher.add_handler(dov_e_handler)
+dispatcher.add_handler(dov_e_ora_handler)
+dispatcher.add_handler(dove_sara_handler)
 
 dispatcher.add_error_handler(error_handler)
 
