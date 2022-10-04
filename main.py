@@ -61,7 +61,7 @@ def dov_e(update: Update, context: CallbackContext):
 def chi(update: Update, context: CallbackContext):
     giorno = datetime.datetime.today().weekday()
     now = datetime.datetime.now()
-    update.effective_message.reply_text(orari.orario[update.message.text][str(giorno)][str(now.hour)])
+    update.effective_message.reply_text(orari.orario[update.message.text][str(giorno)][str(now.hour)], reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
 
 
