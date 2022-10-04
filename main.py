@@ -62,10 +62,10 @@ def chi(update: Update, context: CallbackContext):
     giorno = datetime.datetime.today().weekday()
     now = datetime.datetime.now()
     if str(giorno) not in orari.orario[update.message.text].keys():
-        update.effective_message.reply_text("non ha lezione oggi", reply_markup=ReplyKeyboardRemove())
+        update.effective_message.reply_text("oggi non ha lezione", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
     if str(now.hour) not in orari.orario[update.message.text][str(giorno)].keys():
-        update.effective_message.reply_text("non ha lezione ora", reply_markup=ReplyKeyboardRemove())
+        update.effective_message.reply_text("ora non ha lezione", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
     update.effective_message.reply_text(orari.orario[update.message.text][str(giorno)][str(now.hour)], reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
