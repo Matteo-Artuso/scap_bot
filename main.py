@@ -53,8 +53,8 @@ def aule_libere_updated(update: Update, context: CallbackContext):
 
 
 def dov_e(update: Update, context: CallbackContext):
-    keyboard = ['artuzzo', 'giulio', 'barletz']
-    update.message.reply_text("chi vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
+    keyboard = [['artuzzo'], ['giulio'], ['barletz']]
+    update.message.reply_text("chi vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
     return 0
 
 
@@ -146,6 +146,7 @@ dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("giorgio", giorgio))
 dispatcher.add_handler(CommandHandler("scap", scap))
 dispatcher.add_handler(aule_libere_update_handler)
+dispatcher.add_handler(dov_e_handler)
 
 dispatcher.add_error_handler(error_handler)
 
