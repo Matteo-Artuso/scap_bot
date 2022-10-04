@@ -4,6 +4,8 @@ from telegram.ext import Updater, CommandHandler, CallbackContext, ConversationH
 import Token
 from os import listdir
 import random
+import orari.dov_e as orari
+import datetime
 
 # Enable logging
 logging.basicConfig(
@@ -50,6 +52,19 @@ def aule_libere_updated(update: Update, context: CallbackContext):
     return ConversationHandler.END
 
 
+def dov_e(update: Update, context: CallbackContext):
+    keyboard = ['artuzzo']
+    update.message.reply_text("chi vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True))
+    return 0
+
+
+def chi(update: Update, context: CallbackContext):
+    giorno = datetime.datetime.today().weekday()
+    now = datetime.datetime.now()
+    update.effective_message.reply_text(orari.orario[update.message.text][str(giorno)][str(now.hour)])
+    return ConversationHandler.END
+
+
 def barletz(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="ma ti dai fuoco")
     context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F525")
@@ -87,7 +102,6 @@ def scap(update: Update, context: CallbackContext):
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(scelta), 'rb'))
 
 
-# unused function but necessary as fallback
 def cancel(update: Update, context: CallbackContext):
     update.effective_message.reply_text("command canceled", reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
@@ -105,6 +119,14 @@ aule_libere_update_handler = ConversationHandler(
     entry_points=[CommandHandler("aule_libere_update", aule_libere_update)],
     states={
         0: [MessageHandler(Filters.text & ~Filters.command, aule_libere_updated)],
+    },
+    fallbacks=[CommandHandler('cancel', cancel)]
+)
+
+dov_e_handler = ConversationHandler(
+    entry_points=[CommandHandler("dov_e", dov_e)],
+    states={
+        0: [MessageHandler(Filters.text & ~Filters.command, chi)],
     },
     fallbacks=[CommandHandler('cancel', cancel)]
 )
