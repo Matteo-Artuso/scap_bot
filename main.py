@@ -73,9 +73,9 @@ def dov_e_ora(update: Update, context: CallbackContext):
 
 
 def chi_ora(update: Update, context: CallbackContext):
-    giorno_ora = datetime.datetime.today().weekday()
+    giorno_ora = num_to_weekday(datetime.datetime.today().weekday())
     now = datetime.datetime.now()
-    if str(giorno_ora) not in orari.orario[update.message.text].keys():
+    if giorno_ora not in orari.orario[update.message.text].keys():
         update.effective_message.reply_text("oggi non ha lezione", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
     if str(now.hour) not in orari.orario[update.message.text][str(giorno_ora)].keys():
