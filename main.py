@@ -27,15 +27,15 @@ def start(update: Update, context: CallbackContext):
 
 def aule_libere(update: Update, context: CallbackContext):
     with open('orari/aule_libere.txt') as f:
-        text = f.readlines()
+        text = f.read()
     context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
 
 def aule_libere_update(update: Update, context: CallbackContext):
     user = update.effective_user
-    if user.first_name == 'Artuzzo':
+    if user.first_name == 'Artuzzo' or user.first_name == 'giu176':
         with open('orari/aule_libere.txt') as f:
-            text = f.readlines()
+            text = f.read()
         context.bot.send_message(chat_id=update.effective_chat.id, text=text)
         context.bot.send_message(chat_id=update.effective_chat.id, text="rispondi a questo msg con il nuovo orario")
         return 0
@@ -44,7 +44,7 @@ def aule_libere_update(update: Update, context: CallbackContext):
 
 
 def aule_libere_updated(update: Update, context: CallbackContext):
-    with open('readme.txt', 'w') as f:
+    with open('orari/aule_libere.txt', 'w') as f:
         f.write(update.message.text)
     update.effective_message.reply_text("ok")
     return ConversationHandler.END
