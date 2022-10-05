@@ -78,8 +78,8 @@ orario = {
             '12': 'B.5.5 - topologia algebrica',
         },
         'GIO': {
-            '13': 'B architettura - topologia algebrica',
-            '14': 'B architettura - topologia algebrica',
+            '13': 'C architettura - topologia algebrica',
+            '14': 'C architettura - topologia algebrica',
             '16': '26.0.4 - LeA 2',
             '17': '26.0.4 - LeA 2',
         },
