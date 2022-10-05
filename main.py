@@ -158,7 +158,7 @@ def scap(update: Update, context: CallbackContext):
             weights.append(0.99 / lung)
     scelta = random.choices(population=scap_img_list, weights=weights)
     if scelta == ['magni.jpeg']:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="wooo easter egg")
+        context.bot.send_message(chat_id=update.effective_chat.id, text="wooo leggendaria!")
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(scelta), 'rb'))
 
 
