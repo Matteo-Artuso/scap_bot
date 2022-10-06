@@ -26,10 +26,14 @@ def num_to_weekday(day):
         return 'GIO'
     if day == 4:
         return 'VEN'
+    if day == 5:
+        return 'SAB'
+    if day == 6:
+        return 'DOM'
 
 
 # BOT HANDLERS FUNCTIONS
-def error_handler(update: Update, context: CallbackContext) -> None:
+def error_handler(update: Update, context: CallbackContext):
     """Log the error and send a telegram message"""
     # Log the error before we do anything else, so we can see it even if something breaks.
     logger.error(msg="Exception while handling an update:", exc_info=context.error)
