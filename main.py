@@ -4,7 +4,7 @@ from telegram.ext import Updater, CommandHandler, CallbackContext, ConversationH
 import Token
 from os import listdir
 import random
-import orari.orario as orari
+import utile.orario as orari
 import datetime
 
 # Enable logging
@@ -46,7 +46,7 @@ def start(update: Update, context: CallbackContext):
 
 
 def aule_libere(update: Update, context: CallbackContext):
-    with open('orari/aule_libere.txt') as f:
+    with open('utile/aule_libere.txt') as f:
         text = f.read()
     context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
@@ -54,7 +54,7 @@ def aule_libere(update: Update, context: CallbackContext):
 def aule_libere_update(update: Update, context: CallbackContext):
     user = update.effective_user
     if user.name == '@Artuzzo' or user.name == '@giu176' or user.name == '@andrebarl':
-        with open('orari/aule_libere.txt') as f:
+        with open('utile/aule_libere.txt') as f:
             text = f.read()
         context.bot.send_message(chat_id=update.effective_chat.id, text=text)
         context.bot.send_message(chat_id=update.effective_chat.id, text="rispondi a questo msg con il nuovo orario")
@@ -64,7 +64,7 @@ def aule_libere_update(update: Update, context: CallbackContext):
 
 
 def aule_libere_updated(update: Update, context: CallbackContext):
-    with open('orari/aule_libere.txt', 'w') as f:
+    with open('utile/aule_libere.txt', 'w') as f:
         f.write(update.message.text)
     update.effective_message.reply_text("ok")
     return ConversationHandler.END
@@ -76,7 +76,7 @@ def dov_e_ora(update: Update, context: CallbackContext):
     return 0
 
 
-def chi_ora(update: Update, context: CallbackContext):
+def ora(update: Update, context: CallbackContext):
     giorno_ora = num_to_weekday(datetime.datetime.today().weekday())
     now = datetime.datetime.now()
     if giorno_ora not in orari.orario[update.message.text].keys():
@@ -117,7 +117,7 @@ def che_ora(update: Update, context: CallbackContext):
     return 2
 
 
-def chi_sara(update: Update, context: CallbackContext):
+def sara(update: Update, context: CallbackContext):
     global chi, giorno
     ora = update.message.text
     if ora not in orari.orario[chi][giorno].keys():
@@ -126,6 +126,19 @@ def chi_sara(update: Update, context: CallbackContext):
     update.effective_message.reply_text(orari.orario[chi][giorno][ora], reply_markup=ReplyKeyboardRemove())
     chi = ''
     giorno = ''
+    return ConversationHandler.END
+
+
+def tessera_update(update: Update, context: CallbackContext):
+    user = update.effective_user
+    update.effective_message.reply_text("chi ha ora LA tessera?")
+    return 0
+
+
+def tessera_updated(update: Update, context: CallbackContext):
+    with open('utile/tessera.txt', 'w') as f:
+        f.write(update.message.text)
+    context.bot.send_message(chat_id=update.effective_chat.id, text=f"the one to rule them all ce l'ha {update.message.text}")
     return ConversationHandler.END
 
 
@@ -166,6 +179,12 @@ def scap(update: Update, context: CallbackContext):
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(scelta), 'rb'))
 
 
+def tessera(update: Update, context: CallbackContext):
+    with open('utile/tessera.txt') as f:
+        text = f.read()
+    context.bot.send_message(chat_id=update.effective_chat.id, text=text)
+
+
 def cancel(update: Update, context: CallbackContext):
     update.effective_message.reply_text("command canceled", reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
@@ -192,7 +211,7 @@ aule_libere_update_handler = ConversationHandler(
 dov_e_ora_handler = ConversationHandler(
     entry_points=[CommandHandler("dov_e_ora", dov_e_ora)],
     states={
-        0: [MessageHandler(Filters.text & ~Filters.command, chi_ora)],
+        0: [MessageHandler(Filters.text & ~Filters.command, ora)],
     },
     fallbacks=[CommandHandler('cancel', cancel)]
 )
@@ -202,10 +221,20 @@ dove_sara_handler = ConversationHandler(
     states={
         0: [MessageHandler(Filters.text & ~Filters.command, che_giorno)],
         1: [MessageHandler(Filters.text & ~Filters.command, che_ora)],
-        2: [MessageHandler(Filters.text & ~Filters.command, chi_sara)],
+        2: [MessageHandler(Filters.text & ~Filters.command, sara)],
     },
     fallbacks=[CommandHandler('cancel', cancel)]
 )
+
+
+tessera_handler = ConversationHandler(
+    entry_points=[CommandHandler("tessera_update", tessera_update)],
+    states={
+        0: [MessageHandler(Filters.text & ~Filters.command, tessera_updated)],
+    },
+    fallbacks=[CommandHandler('cancel', cancel)]
+)
+
 
 dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(CommandHandler("aule_libere", aule_libere))
@@ -215,9 +244,11 @@ dispatcher.add_handler(CommandHandler("lucio", lucio))
 dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("giorgio", giorgio))
 dispatcher.add_handler(CommandHandler("scap", scap))
+dispatcher.add_handler(CommandHandler("tessera", tessera))
 dispatcher.add_handler(aule_libere_update_handler)
 dispatcher.add_handler(dov_e_ora_handler)
 dispatcher.add_handler(dove_sara_handler)
+dispatcher.add_handler(tessera_handler)
 
 dispatcher.add_error_handler(error_handler)
 
