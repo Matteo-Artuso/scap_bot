@@ -51,6 +51,49 @@ def aule_libere(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
 
+def barletz(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="ma ti dai fuoco")
+    context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F525")
+
+
+def arco(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F921")
+
+
+def lucio(update: Update, context: CallbackContext):
+    context.bot.send_audio(chat_id=update.effective_chat.id, audio=open('cazzate/lucio.mp3', 'rb'))
+
+
+def heroku(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F4A9")
+
+
+def giorgio(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F441\U0001F444\U0001F441")
+
+
+def scap(update: Update, context: CallbackContext):
+    scap_img_list = listdir('cazzate/scap')
+    lung = len(scap_img_list)
+    lung = lung-1
+    weights = []
+    for img in scap_img_list:
+        if img == 'magni.jpeg':
+            weights.append(0.01)
+        else:
+            weights.append(0.99 / lung)
+    scelta = random.choices(population=scap_img_list, weights=weights)
+    if scelta == ['magni.jpeg']:
+        context.bot.send_message(chat_id=update.effective_chat.id, text="wooo leggendaria!")
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(scelta), 'rb'))
+
+
+def tessera(update: Update, context: CallbackContext):
+    with open('utile/tessera.txt') as f:
+        text = f.read()
+    context.bot.send_message(chat_id=update.effective_chat.id, text=f"the one to rule them all ce l'ha {text}")
+
+
 def aule_libere_update(update: Update, context: CallbackContext):
     user = update.effective_user
     if user.name == '@Artuzzo' or user.name == '@giu176' or user.name == '@andrebarl':
@@ -140,49 +183,6 @@ def tessera_updated(update: Update, context: CallbackContext):
         f.write(update.message.text)
     context.bot.send_message(chat_id=update.effective_chat.id, text=f"the one to rule them all ce l'ha {update.message.text}")
     return ConversationHandler.END
-
-
-def barletz(update: Update, context: CallbackContext):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="ma ti dai fuoco")
-    context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F525")
-
-
-def arco(update: Update, context: CallbackContext):
-    context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F921")
-
-
-def lucio(update: Update, context: CallbackContext):
-    context.bot.send_audio(chat_id=update.effective_chat.id, audio=open('cazzate/lucio.mp3', 'rb'))
-
-
-def heroku(update: Update, context: CallbackContext):
-    context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F4A9")
-
-
-def giorgio(update: Update, context: CallbackContext):
-    context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F441\U0001F444\U0001F441")
-
-
-def scap(update: Update, context: CallbackContext):
-    scap_img_list = listdir('cazzate/scap')
-    lung = len(scap_img_list)
-    lung = lung-1
-    weights = []
-    for img in scap_img_list:
-        if img == 'magni.jpeg':
-            weights.append(0.01)
-        else:
-            weights.append(0.99 / lung)
-    scelta = random.choices(population=scap_img_list, weights=weights)
-    if scelta == ['magni.jpeg']:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="wooo leggendaria!")
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(scelta), 'rb'))
-
-
-def tessera(update: Update, context: CallbackContext):
-    with open('utile/tessera.txt') as f:
-        text = f.read()
-    context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
 
 def cancel(update: Update, context: CallbackContext):
