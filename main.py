@@ -283,4 +283,4 @@ updater.start_polling()
 updater.idle()
 
 j = updater.job_queue
-job_daily = j.run_daily(reset_scap_coin(), days=(0, 1, 2, 3, 4, 5, 6), time=datetime.time(hour=8, minute=00, second=00))
+job_daily = j.run_daily(reset_scap_coin, days=(0, 1, 2, 3, 4, 5, 6), time=datetime.time(hour=8, minute=00, second=00))
