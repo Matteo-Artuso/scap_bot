@@ -2,10 +2,13 @@ import logging
 from telegram import ReplyKeyboardMarkup, Update, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, CallbackContext, ConversationHandler, MessageHandler, Filters
 import Token
+import cazzate.scap_coin as SCAP
 from os import listdir
 import random
 import utile.orario as orari
 import datetime
+import time
+import schedule
 
 # Enable logging
 logging.basicConfig(
@@ -30,6 +33,10 @@ def num_to_weekday(day):
         return 'SAB'
     if day == 6:
         return 'DOM'
+
+
+def reset_scap_coin():
+    SCAP.coin.clear()
 
 
 # BOT HANDLERS FUNCTIONS
@@ -73,6 +80,17 @@ def giorgio(update: Update, context: CallbackContext):
 
 
 def scap(update: Update, context: CallbackContext):
+    user = update.effective_user
+    if user.name in SCAP.coin.keys():
+        SCAP.coin[user.name] = SCAP.coin[user.name] - 1
+        if SCAP.coin[user.name] == -1:
+            update.message.reply_text("SCAP COIN FINITI, se ne vuoi altri https://www.paypal.me/matteoartuso99")
+            return
+        if SCAP.coin[user.name] < -1:
+            return
+    else:
+        SCAP.coin[user.name] = 9
+    update.message.reply_text("SCAP COIN rimasti: " + str(SCAP.coin[user.name]))
     scap_img_list = listdir('cazzate/scap')
     lung = len(scap_img_list)
     lung = lung-1   # magni escluso dal conteggio
@@ -259,3 +277,9 @@ updater.start_polling()
 # SIGTERM or SIGABRT. This should be used most of the time, since
 # start_polling() is non-blocking and will stop the bot gracefully.
 updater.idle()
+
+schedule.every().day.at("00:00").do(reset_scap_coin)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
