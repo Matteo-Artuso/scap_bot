@@ -75,7 +75,7 @@ def giorgio(update: Update, context: CallbackContext):
 def scap(update: Update, context: CallbackContext):
     scap_img_list = listdir('cazzate/scap')
     lung = len(scap_img_list)
-    lung = lung-1
+    lung = lung-1   # magni escluso dal conteggio
     weights = []
     for img in scap_img_list:
         if img == 'magni.jpeg':
