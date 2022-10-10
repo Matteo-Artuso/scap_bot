@@ -2,7 +2,6 @@ import logging
 from telegram import ReplyKeyboardMarkup, Update, ReplyKeyboardRemove
 from telegram.ext import Updater, CommandHandler, CallbackContext, ConversationHandler, MessageHandler, Filters
 import Token
-import cazzate.scap_coin as SCAP
 from os import listdir
 import random
 import utile.orario as orari
@@ -36,7 +35,7 @@ def num_to_weekday(day):
 
 
 def reset_scap_coin():
-    SCAP.coin.clear()
+    SCAP.clear()
 
 
 # BOT HANDLERS FUNCTIONS
@@ -81,16 +80,15 @@ def giorgio(update: Update, context: CallbackContext):
 
 def scap(update: Update, context: CallbackContext):
     user = update.effective_user
-    if user.name in SCAP.coin.keys():
-        SCAP.coin[user.name] = SCAP.coin[user.name] - 1
-        if SCAP.coin[user.name] == -1:
+    if user.name in SCAP.keys():
+        SCAP[user.name] = SCAP[user.name] - 1
+        if SCAP[user.name] == -1:
             update.message.reply_text("SCAP COIN FINITI, se ne vuoi altri https://www.paypal.me/matteoartuso99")
             return
-        if SCAP.coin[user.name] < -1:
+        if SCAP[user.name] < -1:
             return
     else:
-        SCAP.coin[user.name] = 9
-    update.message.reply_text("SCAP COIN rimasti: " + str(SCAP.coin[user.name]))
+        SCAP[user.name] = 9
     scap_img_list = listdir('cazzate/scap')
     lung = len(scap_img_list)
     lung = lung-1   # magni escluso dal conteggio
@@ -104,6 +102,7 @@ def scap(update: Update, context: CallbackContext):
     if scelta == ['magni.jpeg']:
         context.bot.send_message(chat_id=update.effective_chat.id, text="wooo leggendaria!")
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(scelta), 'rb'))
+    update.message.reply_text("SCAP COIN rimasti: " + str(SCAP[user.name]))
 
 
 def tessera(update: Update, context: CallbackContext):
@@ -211,6 +210,7 @@ def cancel(update: Update, context: CallbackContext):
 ### START ###
 chi = ''
 giorno = ''
+SCAP = {}
 # Create the Updater and pass it your bot token.
 updater = Updater(Token.token)
 
