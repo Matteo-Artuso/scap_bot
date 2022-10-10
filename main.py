@@ -6,14 +6,14 @@ from os import listdir
 import random
 import utile.orario as orari
 import datetime
-import time
-import schedule
 
 # Enable logging
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
 logger = logging.getLogger(__name__)
+
+#chat_id = ''
 
 
 # UTILITY FUNCTIONS
@@ -34,8 +34,9 @@ def num_to_weekday(day):
         return 'DOM'
 
 
-def reset_scap_coin():
+def reset_scap_coin(context: CallbackContext):
     SCAP.clear()
+#    context.bot.send_message(chat_id=chat_id, text="BUONGIORNO, SCAP COIN RESETTATI")
 
 
 # BOT HANDLERS FUNCTIONS
@@ -43,7 +44,7 @@ def error_handler(update: Update, context: CallbackContext):
     """Log the error and send a telegram message"""
     # Log the error before we do anything else, so we can see it even if something breaks.
     logger.error(msg="Exception while handling an update:", exc_info=context.error)
-    context.bot.send_message(chat_id=update.effective_chat.id, text="riprova")
+    update.message.reply_text("riprova")
 
 
 def start(update: Update, context: CallbackContext):
@@ -281,8 +282,5 @@ updater.start_polling()
 # start_polling() is non-blocking and will stop the bot gracefully.
 updater.idle()
 
-schedule.every().day.at("00:00").do(reset_scap_coin)
-
-while True:
-    schedule.run_pending()
-    time.sleep(30)
+j = updater.job_queue
+job_daily = j.run_daily(reset_scap_coin(), days=(0, 1, 2, 3, 4, 5, 6), time=datetime.time(hour=8, minute=00, second=00))
