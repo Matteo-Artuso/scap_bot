@@ -16,8 +16,8 @@ orario = {
             '15': '9.1.2 - big data',
         },
         'MER': {
-            '10': '2.1.1 - ricerca operativa',
-            '11': '2.1.1 - ricerca operativa',
+            '10': '2.1.2 - ricerca operativa',
+            '11': '2.1.2 - ricerca operativa',
             '14': '9.0.1 - recommender systems',
             '15': '9.0.1 - recommender systems',
         },
