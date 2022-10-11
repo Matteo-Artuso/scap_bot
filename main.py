@@ -147,7 +147,7 @@ def ora(update: Update, context: CallbackContext):
         update.effective_message.reply_text("oggi non ha lezione", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
     if str(now.hour) not in orari.orario[update.message.text][str(giorno_ora)].keys():
-        update.effective_message.reply_text("ora non ha lezione", reply_markup=ReplyKeyboardRemove())
+        update.effective_message.reply_text(f"alle {str(now.hour)} non ha lezione", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
     update.effective_message.reply_text(orari.orario[update.message.text][str(giorno_ora)][str(now.hour)], reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
@@ -183,11 +183,11 @@ def che_ora(update: Update, context: CallbackContext):
 
 def sara(update: Update, context: CallbackContext):
     global chi, giorno
-    ora = update.message.text
-    if ora not in orari.orario[chi][giorno].keys():
-        update.effective_message.reply_text(giorno + " alle " + ora + " " + chi + " non ha lezione", reply_markup=ReplyKeyboardRemove())
+    now = update.message.text
+    if now not in orari.orario[chi][giorno].keys():
+        update.effective_message.reply_text(giorno + " alle " + now + " " + chi + " non ha lezione", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
-    update.effective_message.reply_text(orari.orario[chi][giorno][ora], reply_markup=ReplyKeyboardRemove())
+    update.effective_message.reply_text(orari.orario[chi][giorno][now], reply_markup=ReplyKeyboardRemove())
     chi = ''
     giorno = ''
     return ConversationHandler.END
