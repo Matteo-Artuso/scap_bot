@@ -14,7 +14,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-#chat_id = ''
+chat_id = '-655840597'
 
 
 # UTILITY FUNCTIONS
@@ -37,7 +37,7 @@ def num_to_weekday(day):
 
 def reset_scap_coin(context: CallbackContext):
     SCAP.clear()
-#    context.bot.send_message(chat_id=chat_id, text="BUONGIORNO, SCAP COIN RESETTATI")
+    context.bot.send_message(chat_id=chat_id, text="BUONGIORNO, SCAP COIN RESETTATI")
 
 
 # BOT HANDLERS FUNCTIONS
@@ -81,7 +81,11 @@ def giorgio(update: Update, context: CallbackContext):
 
 
 def scap(update: Update, context: CallbackContext):
+    global scap_coin
     user = update.effective_user
+    if scap_coin == 0:
+        scap_coin = 1
+        context.job_queue.run_daily(reset_scap_coin, datetime.time(hour=8, minute=00, tzinfo=timezone('Europe/Rome')), days=(0, 1, 2, 3, 4, 5, 6), context=update.message.chat_id)
     if user.name in SCAP.keys():
         SCAP[user.name] = SCAP[user.name] - 1
         if SCAP[user.name] == -1:
@@ -216,6 +220,7 @@ def cancel(update: Update, context: CallbackContext):
 chi = ''
 giorno = ''
 SCAP = {}
+scap_coin = 0
 # Create the Updater and pass it your bot token.
 updater = Updater(Token.token)
 
@@ -266,7 +271,7 @@ dispatcher.add_handler(CommandHandler("arco", arco))
 dispatcher.add_handler(CommandHandler("lucio", lucio))
 dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("giorgio", giorgio))
-dispatcher.add_handler(CommandHandler("scap", scap))
+dispatcher.add_handler(CommandHandler("scap", scap, pass_job_queue=True))
 dispatcher.add_handler(CommandHandler("tessera", tessera))
 dispatcher.add_handler(aule_libere_update_handler)
 dispatcher.add_handler(dov_e_ora_handler)
@@ -282,6 +287,3 @@ updater.start_polling()
 # SIGTERM or SIGABRT. This should be used most of the time, since
 # start_polling() is non-blocking and will stop the bot gracefully.
 updater.idle()
-
-j = updater.job_queue
-job_daily = j.run_daily(reset_scap_coin, days=(0, 1, 2, 3, 4, 5, 6), time=datetime.time(hour=8, minute=00, second=00))
