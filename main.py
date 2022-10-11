@@ -6,6 +6,7 @@ from os import listdir
 import random
 import utile.orario as orari
 import datetime
+import pytz
 
 # Enable logging
 logging.basicConfig(
@@ -44,7 +45,7 @@ def error_handler(update: Update, context: CallbackContext):
     """Log the error and send a telegram message"""
     # Log the error before we do anything else, so we can see it even if something breaks.
     logger.error(msg="Exception while handling an update:", exc_info=context.error)
-    update.message.reply_text("riprova")
+    update.message.reply_text("errore")
 
 
 def start(update: Update, context: CallbackContext):
@@ -147,7 +148,7 @@ def ora(update: Update, context: CallbackContext):
         update.effective_message.reply_text("oggi non ha lezione", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
     if str(now.hour) not in orari.orario[update.message.text][str(giorno_ora)].keys():
-        update.effective_message.reply_text(f"alle {str(now.hour)} non ha lezione", reply_markup=ReplyKeyboardRemove())
+        update.effective_message.reply_text("ora non ha lezione", reply_markup=ReplyKeyboardRemove())
         return ConversationHandler.END
     update.effective_message.reply_text(orari.orario[update.message.text][str(giorno_ora)][str(now.hour)], reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
