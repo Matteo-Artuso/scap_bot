@@ -65,6 +65,7 @@ def error_handler(update: Update, context: CallbackContext):
 
     # Finally, send the message
     context.bot.send_message(chat_id=chat_id, text=message, parse_mode=ParseMode.HTML)
+    return ConversationHandler.END
 
 
 def start(update: Update, context: CallbackContext):
@@ -156,7 +157,7 @@ def aule_libere_updated(update: Update, context: CallbackContext):
     user = update.effective_user
     with open('utile/aule_libere.txt', 'w') as f:
         f.write(update.message.text)
-    context.bot.send_message(chat_id=chat_id, text=f"{user.name} ha modificato aule libere")
+    context.bot.send_message(chat_id=chat_id, text=f"{user.name} aule libere aggiornato")
     return ConversationHandler.END
 
 
