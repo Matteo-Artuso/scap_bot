@@ -134,9 +134,10 @@ def aule_libere_update(update: Update, context: CallbackContext):
 
 
 def aule_libere_updated(update: Update, context: CallbackContext):
+    user = update.effective_user
     with open('utile/aule_libere.txt', 'w') as f:
         f.write(update.message.text)
-    update.effective_message.reply_text("ok")
+    context.bot.send_message(chat_id=chat_id, text=f"{user.name} ha modificato aule libere")
     return ConversationHandler.END
 
 
@@ -200,15 +201,15 @@ def sara(update: Update, context: CallbackContext):
 
 
 def tessera_update(update: Update, context: CallbackContext):
-    user = update.effective_user
     update.effective_message.reply_text("chi ha ora LA tessera?")
     return 0
 
 
 def tessera_updated(update: Update, context: CallbackContext):
+    user = update.effective_user
     with open('utile/tessera.txt', 'w') as f:
         f.write(update.message.text)
-    context.bot.send_message(chat_id=update.effective_chat.id, text=f"the one to rule them all ce l'ha {update.message.text}")
+    context.bot.send_message(chat_id=chat_id, text=f"{user.name} the one to rule them all ce l'ha {update.message.text}")
     return ConversationHandler.END
 
 
