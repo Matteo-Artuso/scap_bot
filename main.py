@@ -274,8 +274,6 @@ tessera_handler = ConversationHandler(
     },
     fallbacks=[CommandHandler('cancel', cancel)]
 )
-
-
 dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(CommandHandler("aule_libere", aule_libere))
 dispatcher.add_handler(CommandHandler("barletz", barletz))
