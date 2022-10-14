@@ -247,7 +247,6 @@ aule_libere_update_handler = ConversationHandler(
     },
     fallbacks=[CommandHandler('cancel', cancel)]
 )
-
 dov_e_ora_handler = ConversationHandler(
     entry_points=[CommandHandler("dov_e_ora", dov_e_ora)],
     states={
@@ -255,7 +254,6 @@ dov_e_ora_handler = ConversationHandler(
     },
     fallbacks=[CommandHandler('cancel', cancel)]
 )
-
 dove_sara_handler = ConversationHandler(
     entry_points=[CommandHandler("dove_sara", dove_sara)],
     states={
@@ -265,8 +263,6 @@ dove_sara_handler = ConversationHandler(
     },
     fallbacks=[CommandHandler('cancel', cancel)]
 )
-
-
 tessera_handler = ConversationHandler(
     entry_points=[CommandHandler("tessera_update", tessera_update)],
     states={
