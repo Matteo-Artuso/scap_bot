@@ -101,13 +101,13 @@ def scap(update: Update, context: CallbackContext):
         if SCAP[user.name] == -1:
             update.message.reply_text("SCAP COIN FINITI, se ne vuoi altri https://www.paypal.me/matteoartuso99")
             return
-        if SCAP[user.name] == -(scap_coin_giornalieri*2):
+        if SCAP[user.name] == -scap_coin_giornalieri:
             update.message.reply_text("CONGRATULAZIONI sei un COGLIONE, hai usato /scap il doppio delle volte del limite")
             return
         if SCAP[user.name] < -1:
             return
     else:
-        SCAP[user.name] = scap_coin_giornalieri
+        SCAP[user.name] = scap_coin_giornalieri - 1
     scap_img_list = listdir('cazzate/scap')
     lung = len(scap_img_list)
     lung = lung-1   # magni escluso dal conteggio
