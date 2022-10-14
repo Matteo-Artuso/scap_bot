@@ -104,6 +104,10 @@ def heroku(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F4A9")
 
 
+def bergamo(update: Update, context: CallbackContext):
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/bergamo.jpeg', 'rb'))
+
+
 def scap(update: Update, context: CallbackContext):
     global scap_coin_reset
     user = update.effective_user
@@ -299,6 +303,7 @@ dispatcher.add_handler(CommandHandler("lucio", lucio))
 dispatcher.add_handler(CommandHandler("giorgio", giorgio))
 dispatcher.add_handler(CommandHandler("artuzzo", artuzzo))
 dispatcher.add_handler(CommandHandler("heroku", heroku))
+dispatcher.add_handler(CommandHandler("bergamo", bergamo))
 dispatcher.add_handler(CommandHandler("scap", scap, pass_job_queue=True))
 dispatcher.add_handler(CommandHandler("tessera", tessera))
 dispatcher.add_handler(aule_libere_update_handler)
