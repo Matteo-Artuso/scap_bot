@@ -17,7 +17,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-chat_id = '-655840597'
+chat_id = '-1001831422326'
 
 
 # UTILITY FUNCTIONS
@@ -92,19 +92,23 @@ def lucio(update: Update, context: CallbackContext):
     context.bot.send_audio(chat_id=update.effective_chat.id, audio=open('cazzate/lucio.mp3', 'rb'))
 
 
-def heroku(update: Update, context: CallbackContext):
-    context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F4A9")
-
-
 def giorgio(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F441\U0001F444\U0001F441")
 
 
+def artuzzo(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Chiedere può essere la vergogna di un minuto, non chiedere il rimpianto di una vita. Mi fai assaggiare?")
+
+
+def heroku(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F4A9")
+
+
 def scap(update: Update, context: CallbackContext):
-    global scap_coin
+    global scap_coin_reset
     user = update.effective_user
-    if scap_coin == 0:
-        scap_coin = 1
+    if scap_coin_reset == 0:
+        scap_coin_reset = 1
         context.job_queue.run_daily(reset_scap_coin, datetime.time(hour=8, minute=00, tzinfo=timezone('Europe/Rome')), days=(0, 1, 2, 3, 4, 5, 6), context=update.message.chat_id)
         context.bot.send_message(chat_id=update.effective_chat.id, text="reset SCAP COIN alle 8")
     if user.name in SCAP.keys():
@@ -112,13 +116,13 @@ def scap(update: Update, context: CallbackContext):
         if SCAP[user.name] == -1:
             update.message.reply_text("SCAP COIN FINITI, se ne vuoi altri https://www.paypal.me/matteoartuso99")
             return
-        if SCAP[user.name] == -10:
-            update.message.reply_text("CONGRATULAZIONI sei un COGLIONE, hai usato /scap 10 volte in più del limite")
+        if SCAP[user.name] == -(scap_coin_giornalieri*2):
+            update.message.reply_text("CONGRATULAZIONI sei un COGLIONE, hai usato /scap il doppio delle volte del limite")
             return
         if SCAP[user.name] < -1:
             return
     else:
-        SCAP[user.name] = 9
+        SCAP[user.name] = scap_coin_giornalieri
     scap_img_list = listdir('cazzate/scap')
     lung = len(scap_img_list)
     lung = lung-1   # magni escluso dal conteggio
@@ -242,7 +246,8 @@ def cancel(update: Update, context: CallbackContext):
 chi = ''
 giorno = ''
 SCAP = {}
-scap_coin = 0
+scap_coin_reset = 0
+scap_coin_giornalieri = 5
 # Create the Updater and pass it your bot token.
 updater = Updater(Token.token)
 
@@ -291,8 +296,9 @@ dispatcher.add_handler(CommandHandler("aule_libere", aule_libere))
 dispatcher.add_handler(CommandHandler("barletz", barletz))
 dispatcher.add_handler(CommandHandler("arco", arco))
 dispatcher.add_handler(CommandHandler("lucio", lucio))
-dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("giorgio", giorgio))
+dispatcher.add_handler(CommandHandler("artuzzo", artuzzo))
+dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("scap", scap, pass_job_queue=True))
 dispatcher.add_handler(CommandHandler("tessera", tessera))
 dispatcher.add_handler(aule_libere_update_handler)
