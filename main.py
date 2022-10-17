@@ -75,7 +75,10 @@ def start(update: Update, context: CallbackContext):
 def aule_libere(update: Update, context: CallbackContext):
     with open('utile/aule_libere.txt') as f:
         text = f.read()
-    context.bot.send_message(chat_id=update.effective_chat.id, text=text)
+    if text == "":
+        context.bot.send_message(chat_id=update.effective_chat.id, text='nessun aula salvata')
+    else:
+        context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
 
 def barletz(update: Update, context: CallbackContext):
@@ -153,8 +156,10 @@ def aule_libere_update(update: Update, context: CallbackContext):
     if user.name == '@Artuzzo' or user.name == '@giu176' or user.name == '@andrebarl':
         with open('utile/aule_libere.txt') as f:
             text = f.read()
-        context.bot.send_message(chat_id=update.effective_chat.id, text=text)
-        context.bot.send_message(chat_id=update.effective_chat.id, text="rispondi a questo msg con il nuovo orario")
+        if text == "":
+            context.bot.send_message(chat_id=update.effective_chat.id, text='txt vuoto')
+        else:
+            context.bot.send_message(chat_id=update.effective_chat.id, text=text)
         return 0
     update.message.reply_text("utente non autorizzato")
     return ConversationHandler.END
