@@ -46,7 +46,6 @@ def reset_scap_coin(context: CallbackContext):
 # BOT HANDLERS FUNCTIONS
 def error_handler(update: Update, context: CallbackContext):
     update.message.reply_text("errore")
-    return ConversationHandler.END
 
 
 def start(update: Update, context: CallbackContext):
