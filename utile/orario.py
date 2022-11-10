@@ -1,9 +1,9 @@
 orario = {
     'artuzzo': {
         'LUN': {
-            '14': 'T.0.2 - elettronica',
-            '15': 'T.0.2 - elettronica',
-            '16': 'sovrapposizione:\nT.0.2 - elettronica\nB.2.4 - LAB ricerca operativa',
+            '14': '9.0.1 - elettronica',
+            '15': '9.0.1 - elettronica',
+            '16': 'sovrapposizione:\n9.0.1 - elettronica\nB.2.4 - LAB ricerca operativa',
             '17': 'B.2.4 - LAB ricerca operativa',
             '18': 'B.2.4 - LAB ricerca operativa',
         },
@@ -22,8 +22,8 @@ orario = {
             '15': '9.0.1 - recommender systems',
         },
         'GIO': {
-            '14': '5.0.3 - big data',
-            '15': '5.0.3 - big data',
+            '14': '5.1.1 - big data',
+            '15': '5.1.1 - big data',
             '16': 'sovrapposizione:\n3.0.2 - elettronica\n5.1.1 - recommender systems',
             '17': 'sovrapposizione:\n3.0.2 - elettronica\n5.1.1 - recommender systems',
         },
@@ -53,9 +53,9 @@ orario = {
         'GIO': {
             '9': '7.0.1 - rf systems',
             '10': '7.0.1 - rf systems',
-            '13': '5.1.1 - wireless communications',
-            '14': '5.1.1 - wireless communications',
-            '15': '5.1.1 - wireless communications',
+            '13': '5.0.3 - wireless communications',
+            '14': '5.0.3 - wireless communications',
+            '15': '5.0.3 - wireless communications',
             '16': '9.0.2 - audio signals',
             '17': '9.0.2 - audio signals',
             '18': '9.0.2 - audio signals',
@@ -80,13 +80,6 @@ orario = {
         'GIO': {
             '13': 'C architettura - topologia algebrica',
             '14': 'C architettura - topologia algebrica',
-            '16': 'Natta - LeA 2',
-            '17': 'Natta - LeA 2',
-        },
-        'VEN': {
-            '16': 'T.0.1 - LeA 2',
-            '17': 'T.0.1 - LeA 2',
-            '18': 'T.0.1 - LeA 2',
         }
     }
 }
