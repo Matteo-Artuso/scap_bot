@@ -97,7 +97,7 @@ def giorgio(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F441\U0001F444\U0001F441")
 
 
-def artuzzo(update: Update, context: CallbackContext):
+def billy(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Chiedere può essere la vergogna di un minuto, non chiedere il rimpianto di una vita. Mi fai assaggiare?")
 
 
@@ -192,7 +192,7 @@ def scap(update: Update, context: CallbackContext):
 
 
 # def dove_sara(update: Update, context: CallbackContext):
-#     keyboard = [['artuzzo'], ['giulio'], ['barletz']]
+#     keyboard = [['billy'], ['giulio'], ['barletz']]
 #     update.message.reply_text("chi vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
 #     return 0
 
@@ -299,7 +299,7 @@ dispatcher.add_handler(CommandHandler("barletz", barletz))
 dispatcher.add_handler(CommandHandler("arco", arco))
 dispatcher.add_handler(CommandHandler("lucio", lucio))
 dispatcher.add_handler(CommandHandler("giorgio", giorgio))
-dispatcher.add_handler(CommandHandler("artuzzo", artuzzo))
+dispatcher.add_handler(CommandHandler("billy", billy))
 dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("bergamo", bergamo))
 dispatcher.add_handler(CommandHandler("scap", scap, pass_job_queue=True))
