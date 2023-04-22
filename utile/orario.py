@@ -1,5 +1,5 @@
 orario = {
-    'artuzzo': {
+    'billy': {
         'LUN': {
             '14': '9.0.1 - elettronica',
             '15': '9.0.1 - elettronica',

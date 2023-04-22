@@ -7,7 +7,6 @@ from telegram.ext import Updater, CommandHandler, CallbackContext, ConversationH
 import Token
 from os import listdir
 import random
-import utile.orario as orari
 import datetime
 from pytz import timezone
 
@@ -72,13 +71,13 @@ def start(update: Update, context: CallbackContext):
     update.message.reply_text(f"Hi {user.first_name}!")
 
 
-def aule_libere(update: Update, context: CallbackContext):
-    with open('utile/aule_libere.txt') as f:
-        text = f.read()
-    if text == "":
-        context.bot.send_message(chat_id=update.effective_chat.id, text='nessun aula salvata')
-    else:
-        context.bot.send_message(chat_id=update.effective_chat.id, text=text)
+# def aule_libere(update: Update, context: CallbackContext):
+#     with open('utile/aule_libere.txt') as f:
+#         text = f.read()
+#     if text == "":
+#         context.bot.send_message(chat_id=update.effective_chat.id, text='nessun aula salvata')
+#     else:
+#         context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
 
 def barletz(update: Update, context: CallbackContext):
@@ -145,106 +144,106 @@ def scap(update: Update, context: CallbackContext):
     update.message.reply_text("SCAP COIN rimasti: " + str(SCAP[user.name]))
 
 
-def tessera(update: Update, context: CallbackContext):
-    with open('utile/tessera.txt') as f:
-        text = f.read()
-    context.bot.send_message(chat_id=update.effective_chat.id, text=f"the one to rule them all ce l'ha {text}")
+# def tessera(update: Update, context: CallbackContext):
+#     with open('utile/tessera.txt') as f:
+#         text = f.read()
+#     context.bot.send_message(chat_id=update.effective_chat.id, text=f"the one to rule them all ce l'ha {text}")
 
 
-def aule_libere_update(update: Update, context: CallbackContext):
-    user = update.effective_user
-    if user.name == '@Artuzzo' or user.name == '@giu176' or user.name == '@andrebarl':
-        with open('utile/aule_libere.txt') as f:
-            text = f.read()
-        if text == "":
-            context.bot.send_message(chat_id=update.effective_chat.id, text='txt vuoto')
-        else:
-            context.bot.send_message(chat_id=update.effective_chat.id, text=text)
-        return 0
-    update.message.reply_text("utente non autorizzato")
-    return ConversationHandler.END
+# def aule_libere_update(update: Update, context: CallbackContext):
+#     user = update.effective_user
+#     if user.name == '@Artuzzo' or user.name == '@giu176' or user.name == '@andrebarl':
+#         with open('utile/aule_libere.txt') as f:
+#             text = f.read()
+#         if text == "":
+#             context.bot.send_message(chat_id=update.effective_chat.id, text='txt vuoto')
+#         else:
+#             context.bot.send_message(chat_id=update.effective_chat.id, text=text)
+#         return 0
+#     update.message.reply_text("utente non autorizzato")
+#     return ConversationHandler.END
 
 
-def aule_libere_updated(update: Update, context: CallbackContext):
-    user = update.effective_user
-    with open('utile/aule_libere.txt', 'w') as f:
-        f.write(update.message.text)
-    context.bot.send_message(chat_id=chat_id, text=f"{user.name} aule libere aggiornate")
-    return ConversationHandler.END
+# def aule_libere_updated(update: Update, context: CallbackContext):
+#     user = update.effective_user
+#     with open('utile/aule_libere.txt', 'w') as f:
+#         f.write(update.message.text)
+#     context.bot.send_message(chat_id=chat_id, text=f"{user.name} aule libere aggiornate")
+#     return ConversationHandler.END
 
 
-def dov_e_ora(update: Update, context: CallbackContext):
-    keyboard = [['artuzzo'], ['giulio'], ['barletz']]
-    update.message.reply_text("chi vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
-    return 0
+# def dov_e_ora(update: Update, context: CallbackContext):
+#     keyboard = [['billy'], ['giulio'], ['barletz']]
+#     update.message.reply_text("chi vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
+#     return 0
 
 
-def ora(update: Update, context: CallbackContext):
-    giorno_ora = num_to_weekday(datetime.datetime.today().weekday())
-    now = datetime.datetime.now(timezone('Europe/Rome'))
-    if giorno_ora not in orari.orario[update.message.text].keys():
-        update.effective_message.reply_text("oggi non ha lezione", reply_markup=ReplyKeyboardRemove())
-        return ConversationHandler.END
-    if str(now.hour) not in orari.orario[update.message.text][str(giorno_ora)].keys():
-        update.effective_message.reply_text("ora non ha lezione", reply_markup=ReplyKeyboardRemove())
-        return ConversationHandler.END
-    update.effective_message.reply_text(orari.orario[update.message.text][str(giorno_ora)][str(now.hour)], reply_markup=ReplyKeyboardRemove())
-    return ConversationHandler.END
+# def ora(update: Update, context: CallbackContext):
+#     giorno_ora = num_to_weekday(datetime.datetime.today().weekday())
+#     now = datetime.datetime.now(timezone('Europe/Rome'))
+#     if giorno_ora not in orari.orario[update.message.text].keys():
+#         update.effective_message.reply_text("oggi non ha lezione", reply_markup=ReplyKeyboardRemove())
+#         return ConversationHandler.END
+#     if str(now.hour) not in orari.orario[update.message.text][str(giorno_ora)].keys():
+#         update.effective_message.reply_text("ora non ha lezione", reply_markup=ReplyKeyboardRemove())
+#         return ConversationHandler.END
+#     update.effective_message.reply_text(orari.orario[update.message.text][str(giorno_ora)][str(now.hour)], reply_markup=ReplyKeyboardRemove())
+#     return ConversationHandler.END
 
 
-def dove_sara(update: Update, context: CallbackContext):
-    keyboard = [['artuzzo'], ['giulio'], ['barletz']]
-    update.message.reply_text("chi vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
-    return 0
+# def dove_sara(update: Update, context: CallbackContext):
+#     keyboard = [['artuzzo'], ['giulio'], ['barletz']]
+#     update.message.reply_text("chi vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
+#     return 0
 
 
-def che_giorno(update: Update, context: CallbackContext):
-    global chi
-    chi = update.message.text
-    keyboard = [['oggi'], ['LUN'], ['MAR'], ['MER'], ['GIO'], ['VEN']]
-    update.message.reply_text("che giorno vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
-    return 1
+# def che_giorno(update: Update, context: CallbackContext):
+#     global chi
+#     chi = update.message.text
+#     keyboard = [['oggi'], ['LUN'], ['MAR'], ['MER'], ['GIO'], ['VEN']]
+#     update.message.reply_text("che giorno vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
+#     return 1
 
 
-def che_ora(update: Update, context: CallbackContext):
-    global giorno
-    if update.message.text == 'oggi':
-        giorno = num_to_weekday(datetime.datetime.today().weekday())
-    else:
-        giorno = update.message.text
-    if giorno not in orari.orario[chi].keys():
-        update.effective_message.reply_text(giorno + " " + chi + " non ha lezione", reply_markup=ReplyKeyboardRemove())
-        return ConversationHandler.END
-    keyboard = [['8', '9'], ['10', '11'], ['12', '13'], ['14', '15'], ['16', '17'], ['18', '19']]
-    update.message.reply_text("a che ora vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
-    return 2
+# def che_ora(update: Update, context: CallbackContext):
+#     global giorno
+#     if update.message.text == 'oggi':
+#         giorno = num_to_weekday(datetime.datetime.today().weekday())
+#     else:
+#         giorno = update.message.text
+#     if giorno not in orari.orario[chi].keys():
+#         update.effective_message.reply_text(giorno + " " + chi + " non ha lezione", reply_markup=ReplyKeyboardRemove())
+#         return ConversationHandler.END
+#     keyboard = [['8', '9'], ['10', '11'], ['12', '13'], ['14', '15'], ['16', '17'], ['18', '19']]
+#     update.message.reply_text("a che ora vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
+#     return 2
 
 
-def sara(update: Update, context: CallbackContext):
-    global chi, giorno
-    now = update.message.text
-    if now not in orari.orario[chi][giorno].keys():
-        update.effective_message.reply_text(giorno + " alle " + now + " " + chi + " non ha lezione", reply_markup=ReplyKeyboardRemove())
-        return ConversationHandler.END
-    update.effective_message.reply_text(orari.orario[chi][giorno][now], reply_markup=ReplyKeyboardRemove())
-    chi = ''
-    giorno = ''
-    return ConversationHandler.END
+# def sara(update: Update, context: CallbackContext):
+#     global chi, giorno
+#     now = update.message.text
+#     if now not in orari.orario[chi][giorno].keys():
+#         update.effective_message.reply_text(giorno + " alle " + now + " " + chi + " non ha lezione", reply_markup=ReplyKeyboardRemove())
+#         return ConversationHandler.END
+#     update.effective_message.reply_text(orari.orario[chi][giorno][now], reply_markup=ReplyKeyboardRemove())
+#     chi = ''
+#     giorno = ''
+#     return ConversationHandler.END
 
 
-def tessera_update(update: Update, context: CallbackContext):
-    update.effective_message.reply_text("chi ha ora LA tessera?")
-    return 0
+# def tessera_update(update: Update, context: CallbackContext):
+#     update.effective_message.reply_text("chi ha ora LA tessera?")
+#     return 0
 
 
-def tessera_updated(update: Update, context: CallbackContext):
-    user = update.effective_user
-    with open('utile/tessera.txt') as f:
-        propietario_old = f.read()
-    with open('utile/tessera.txt', 'w') as f:
-        f.write(update.message.text)
-    context.bot.send_message(chat_id=chat_id, text=f"{user.name} the one to rule them all è passata da {propietario_old} a {update.message.text}")
-    return ConversationHandler.END
+# def tessera_updated(update: Update, context: CallbackContext):
+#     user = update.effective_user
+#     with open('utile/tessera.txt') as f:
+#         propietario_old = f.read()
+#     with open('utile/tessera.txt', 'w') as f:
+#         f.write(update.message.text)
+#     context.bot.send_message(chat_id=chat_id, text=f"{user.name} the one to rule them all è passata da {propietario_old} a {update.message.text}")
+#     return ConversationHandler.END
 
 
 def cancel(update: Update, context: CallbackContext):
@@ -265,38 +264,37 @@ updater = Updater(Token.token)
 dispatcher = updater.dispatcher
 
 # handlers
-aule_libere_update_handler = ConversationHandler(
-    entry_points=[CommandHandler("aule_libere_update", aule_libere_update)],
-    states={
-        0: [MessageHandler(Filters.text & ~Filters.command, aule_libere_updated)],
-    },
-    fallbacks=[CommandHandler('cancel', cancel)]
-)
-dov_e_ora_handler = ConversationHandler(
-    entry_points=[CommandHandler("dov_e_ora", dov_e_ora)],
-    states={
-        0: [MessageHandler(Filters.text & ~Filters.command, ora)],
-    },
-    fallbacks=[CommandHandler('cancel', cancel)]
-)
-dove_sara_handler = ConversationHandler(
-    entry_points=[CommandHandler("dove_sara", dove_sara)],
-    states={
-        0: [MessageHandler(Filters.text & ~Filters.command, che_giorno)],
-        1: [MessageHandler(Filters.text & ~Filters.command, che_ora)],
-        2: [MessageHandler(Filters.text & ~Filters.command, sara)],
-    },
-    fallbacks=[CommandHandler('cancel', cancel)]
-)
-tessera_handler = ConversationHandler(
-    entry_points=[CommandHandler("tessera_update", tessera_update)],
-    states={
-        0: [MessageHandler(Filters.text & ~Filters.command, tessera_updated)],
-    },
-    fallbacks=[CommandHandler('cancel', cancel)]
-)
+# aule_libere_update_handler = ConversationHandler(
+#     entry_points=[CommandHandler("aule_libere_update", aule_libere_update)],
+#     states={
+#         0: [MessageHandler(Filters.text & ~Filters.command, aule_libere_updated)],
+#     },
+#     fallbacks=[CommandHandler('cancel', cancel)]
+# )
+# dov_e_ora_handler = ConversationHandler(
+#     entry_points=[CommandHandler("dov_e_ora", dov_e_ora)],
+#     states={
+#         0: [MessageHandler(Filters.text & ~Filters.command, ora)],
+#     },
+#     fallbacks=[CommandHandler('cancel', cancel)]
+# )
+# dove_sara_handler = ConversationHandler(
+#     entry_points=[CommandHandler("dove_sara", dove_sara)],
+#     states={
+#         0: [MessageHandler(Filters.text & ~Filters.command, che_giorno)],
+#         1: [MessageHandler(Filters.text & ~Filters.command, che_ora)],
+#         2: [MessageHandler(Filters.text & ~Filters.command, sara)],
+#     },
+#     fallbacks=[CommandHandler('cancel', cancel)]
+# )
+# tessera_handler = ConversationHandler(
+#     entry_points=[CommandHandler("tessera_update", tessera_update)],
+#     states={
+#         0: [MessageHandler(Filters.text & ~Filters.command, tessera_updated)],
+#     },
+#     fallbacks=[CommandHandler('cancel', cancel)]
+# )
 dispatcher.add_handler(CommandHandler("start", start))
-dispatcher.add_handler(CommandHandler("aule_libere", aule_libere))
 dispatcher.add_handler(CommandHandler("barletz", barletz))
 dispatcher.add_handler(CommandHandler("arco", arco))
 dispatcher.add_handler(CommandHandler("lucio", lucio))
@@ -305,11 +303,12 @@ dispatcher.add_handler(CommandHandler("artuzzo", artuzzo))
 dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("bergamo", bergamo))
 dispatcher.add_handler(CommandHandler("scap", scap, pass_job_queue=True))
-dispatcher.add_handler(CommandHandler("tessera", tessera))
-dispatcher.add_handler(aule_libere_update_handler)
-dispatcher.add_handler(dov_e_ora_handler)
-dispatcher.add_handler(dove_sara_handler)
-dispatcher.add_handler(tessera_handler)
+# dispatcher.add_handler(CommandHandler("aule_libere", aule_libere))
+# dispatcher.add_handler(CommandHandler("tessera", tessera))
+# dispatcher.add_handler(aule_libere_update_handler)
+# dispatcher.add_handler(dov_e_ora_handler)
+# dispatcher.add_handler(dove_sara_handler)
+# dispatcher.add_handler(tessera_handler)
 
 dispatcher.add_error_handler(error_handler)
 
