@@ -134,18 +134,11 @@ def scap(update: Update, context: CallbackContext):
     else:
         SCAP[user.name] = scap_coin_giornalieri - 1
     scap_img_list = listdir('cazzate/scap')
-    num_comuni = len(scap_img_list)-1
-    peso_magni = 0.01/(num_comuni+1)
-    weights = []
-    for img in scap_img_list:
-        if img == 'magni.jpeg':
-            weights.append(peso_magni)
-        else:
-            weights.append( (1-peso_magni)/num_comuni )
-    scelta = random.choices(population=scap_img_list, weights=weights)
-    if scelta == ['magni.jpeg']:
+    if random.randint(1,100) == 1:
         context.bot.send_message(chat_id=update.effective_chat.id, text="wooo leggendaria!")
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(scelta), 'rb'))
+        context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/' + ''.join('magni.jpeg'), 'rb'))
+    else:
+        context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(random.choices(population=scap_img_list)), 'rb'))
     update.message.reply_text("SCAP COIN rimasti: " + str(SCAP[user.name]))
 
 
