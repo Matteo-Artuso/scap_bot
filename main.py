@@ -86,6 +86,7 @@ def barletz(update: Update, context: CallbackContext):
 
 
 def arco(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="in-che-senso")
     context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F921")
 
 
@@ -109,6 +110,10 @@ def bergamo(update: Update, context: CallbackContext):
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/bergamo.jpeg', 'rb'))
 
 
+def tessera(update: Update, context: CallbackContext):
+    context.bot.send_photo(chat_id=update.effective_chat.id, text="F for tessera")
+
+
 def scap(update: Update, context: CallbackContext):
     global scap_coin_reset
     user = update.effective_user
@@ -129,14 +134,14 @@ def scap(update: Update, context: CallbackContext):
     else:
         SCAP[user.name] = scap_coin_giornalieri - 1
     scap_img_list = listdir('cazzate/scap')
-    lung = len(scap_img_list)
-    lung = lung-1   # magni escluso dal conteggio
+    num_comuni = len(scap_img_list)-1
+    peso_magni = 0.01/(num_comuni+1)
     weights = []
     for img in scap_img_list:
         if img == 'magni.jpeg':
-            weights.append(0.01)
+            weights.append(peso_magni)
         else:
-            weights.append(0.99 / lung)
+            weights.append( (1-peso_magni)/num_comuni )
     scelta = random.choices(population=scap_img_list, weights=weights)
     if scelta == ['magni.jpeg']:
         context.bot.send_message(chat_id=update.effective_chat.id, text="wooo leggendaria!")
@@ -302,6 +307,7 @@ dispatcher.add_handler(CommandHandler("giorgio", giorgio))
 dispatcher.add_handler(CommandHandler("billy", billy))
 dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("bergamo", bergamo))
+dispatcher.add_handler(CommandHandler("tessera", tessera))
 dispatcher.add_handler(CommandHandler("scap", scap, pass_job_queue=True))
 # dispatcher.add_handler(CommandHandler("aule_libere", aule_libere))
 # dispatcher.add_handler(CommandHandler("tessera", tessera))
