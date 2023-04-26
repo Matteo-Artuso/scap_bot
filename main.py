@@ -111,7 +111,7 @@ def bergamo(update: Update, context: CallbackContext):
 
 
 def tessera(update: Update, context: CallbackContext):
-    context.bot.send_photo(chat_id=update.effective_chat.id, text="F for tessera")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="F for tessera")
 
 
 def scap(update: Update, context: CallbackContext):
@@ -121,6 +121,7 @@ def scap(update: Update, context: CallbackContext):
         scap_coin_reset = 1
         context.job_queue.run_daily(reset_scap_coin, datetime.time(hour=8, minute=00, tzinfo=timezone('Europe/Rome')), days=(0, 1, 2, 3, 4, 5, 6), context=update.message.chat_id)
         context.bot.send_message(chat_id=update.effective_chat.id, text="reset SCAP COIN alle 8")
+        scap_img_list = listdir('cazzate/scap')
     if user.name in SCAP.keys():
         SCAP[user.name] = SCAP[user.name] - 1
         if SCAP[user.name] == -1:
@@ -133,7 +134,6 @@ def scap(update: Update, context: CallbackContext):
             return
     else:
         SCAP[user.name] = scap_coin_giornalieri - 1
-    scap_img_list = listdir('cazzate/scap')
     if random.randint(1,100) == 1:
         context.bot.send_message(chat_id=update.effective_chat.id, text="wooo leggendaria!")
         context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/' + ''.join('magni.jpeg'), 'rb'))
@@ -254,7 +254,7 @@ chi = ''
 giorno = ''
 SCAP = {}
 scap_coin_reset = 0
-scap_coin_giornalieri = 5
+scap_coin_giornalieri = 3
 # Create the Updater and pass it your bot token.
 updater = Updater(Token.token)
 
