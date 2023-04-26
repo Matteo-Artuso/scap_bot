@@ -85,6 +85,10 @@ def barletz(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F525")
 
 
+def balez(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="_balez_")
+
+
 def arco(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="in-che-senso")
     context.bot.send_message(chat_id=update.effective_chat.id, text=u"\U0001F921")
@@ -294,6 +298,7 @@ dispatcher = updater.dispatcher
 # )
 dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(CommandHandler("barletz", barletz))
+dispatcher.add_handler(CommandHandler("balez", balez))
 dispatcher.add_handler(CommandHandler("arco", arco))
 dispatcher.add_handler(CommandHandler("lucio", lucio))
 dispatcher.add_handler(CommandHandler("giorgio", giorgio))
