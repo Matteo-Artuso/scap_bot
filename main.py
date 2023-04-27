@@ -63,7 +63,8 @@ def error_handler(update: Update, context: CallbackContext):
 
     # Finally, send the message
     context.bot.send_message(chat_id='-845504008', text=message, parse_mode=ParseMode.HTML)
-    update.message.reply_text("errore")
+    update.message.reply_text(text=message, parse_mode=ParseMode.HTML)
+    return ConversationHandler.END
 
 
 def start(update: Update, context: CallbackContext):
@@ -137,12 +138,33 @@ def scap(update: Update, context: CallbackContext):
             return
     else:
         SCAP[user.name] = scap_coin_giornalieri - 1
-    if random.randint(1,100) == 1:
+    if random.randint(1,1) == 1:
         context.bot.send_message(chat_id=update.effective_chat.id, text="wooo leggendaria!")
-        context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/' + ''.join('magni.jpeg'), 'rb'))
-    else:
-        context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(random.choices(population=scap_img_list)), 'rb'))
+        context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/magni.jpeg', 'rb'))
+        update.message.reply_text("SCAP COIN rimasti: " + str(SCAP[user.name]))
+        keyboard = [['SI'], ['NO']]
+        update.message.reply_text("Vuoi caricare un'immagine?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
+        return 0
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(random.choices(population=scap_img_list)), 'rb'))
     update.message.reply_text("SCAP COIN rimasti: " + str(SCAP[user.name]))
+    return ConversationHandler.END
+
+
+def invia_immagine(update, context):
+    if update.message.text == 'SI':
+        update.message.reply_text("Manda l'immagine", reply_markup=ReplyKeyboardRemove())
+        return 1
+    update.message.reply_text("Menomale", reply_markup=ReplyKeyboardRemove())
+    return ConversationHandler.END
+
+
+def salva_immagine(update, context):
+    file = update.message.photo[0].file_id
+    obj = context.bot.get_file(file)
+    obj.download(custom_path='cazzate/scap')
+    scap_img_list.append(obj)
+    update.message.reply_text("Immagine salvata")
+    return ConversationHandler.END
 
 
 # def tessera(update: Update, context: CallbackContext):
@@ -297,6 +319,14 @@ dispatcher = updater.dispatcher
 #     },
 #     fallbacks=[CommandHandler('cancel', cancel)]
 # )
+scap_handler = ConversationHandler(
+     entry_points=[CommandHandler("scap", scap, pass_job_queue=True)],
+     states={
+         0: [MessageHandler(Filters.text & ~Filters.command, invia_immagine)],
+         1: [MessageHandler(Filters.photo & ~Filters.command, salva_immagine)],
+     },
+     fallbacks=[CommandHandler('cancel', cancel)]
+)
 dispatcher.add_handler(CommandHandler("start", start))
 dispatcher.add_handler(CommandHandler("barletz", barletz))
 dispatcher.add_handler(CommandHandler("balez", balez))
@@ -307,7 +337,7 @@ dispatcher.add_handler(CommandHandler("billy", billy))
 dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("bergamo", bergamo))
 dispatcher.add_handler(CommandHandler("tessera", tessera))
-dispatcher.add_handler(CommandHandler("scap", scap, pass_job_queue=True))
+dispatcher.add_handler(scap_handler)
 # dispatcher.add_handler(CommandHandler("aule_libere", aule_libere))
 # dispatcher.add_handler(CommandHandler("tessera", tessera))
 # dispatcher.add_handler(aule_libere_update_handler)
