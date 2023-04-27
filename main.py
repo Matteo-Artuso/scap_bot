@@ -159,10 +159,11 @@ def invia_immagine(update, context):
 
 
 def salva_immagine(update, context):
+    global scap_img_list
     file = update.message.photo[0].file_id
     obj = context.bot.get_file(file)
     obj.download(custom_path='cazzate/scap')
-    scap_img_list.append(obj)
+    scap_img_list = listdir('cazzate/scap')
     update.message.reply_text("Immagine salvata")
     return ConversationHandler.END
 
