@@ -86,7 +86,7 @@ def barletz(update: Update, context: CallbackContext):
 
 
 def balez(update: Update, context: CallbackContext):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="_balez_")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="__balez__")
 
 
 def arco(update: Update, context: CallbackContext):
