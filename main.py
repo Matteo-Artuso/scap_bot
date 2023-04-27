@@ -161,9 +161,7 @@ def invia_immagine(update, context):
 def salva_immagine(update, context):
     global scap_img_list
     file = update.message.photo[0].file_id
-    context.bot.send_message(chat_id='-845504008', text=file)
     obj = context.bot.get_file(file)
-    context.bot.send_message(chat_id='-845504008', text=obj)
     path = 'cazzate/scap/' + "".join(update.effective_user) + ".jpeg"
     obj.download(custom_path=path)
     scap_img_list = listdir('cazzate/scap')
