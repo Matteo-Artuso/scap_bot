@@ -139,7 +139,7 @@ def scap(update: Update, context: CallbackContext):
             return
     else:
         SCAP[user.name] = scap_coin_giornalieri - 1
-    if random.randint(1,1) == 1:
+    if random.randint(1,100) == 1:
         context.bot.send_message(chat_id=update.effective_chat.id, text="wooo leggendaria!")
         context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/magni.jpeg', 'rb'))
         update.message.reply_text("SCAP COIN rimasti: " + str(SCAP[user.name]))
