@@ -138,7 +138,7 @@ def scap(update: Update, context: CallbackContext):
             return
     else:
         SCAP[user.name] = scap_coin_giornalieri - 1
-    if random.randint(1,1) == 1:
+    if random.randint(1,100) == 1:
         context.bot.send_message(chat_id=update.effective_chat.id, text="wooo leggendaria!")
         context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/magni.jpeg', 'rb'))
         update.message.reply_text("SCAP COIN rimasti: " + str(SCAP[user.name]))
@@ -162,8 +162,7 @@ def salva_immagine(update, context):
     global scap_img_list
     file = update.message.photo[0].file_id
     obj = context.bot.get_file(file)
-    path = 'cazzate/scap/' + "".join(update.effective_user) + ".jpeg"
-    obj.download(custom_path=path)
+    obj.download()
     scap_img_list = listdir('cazzate/scap')
     update.message.reply_text("Immagine salvata")
     return ConversationHandler.END
