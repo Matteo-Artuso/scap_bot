@@ -147,7 +147,8 @@ def scap(update: Update, context: CallbackContext):
         update.message.reply_text("Vuoi caricare un'immagine?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
         return 0
     scap_img_list = listdir('cazzate/scap')
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(random.choices(population=scap_img_list)), 'rb'))
+    img = random.choices(population=scap_img_list)
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(img), 'rb'))
     update.message.reply_text("SCAP COIN rimasti: " + str(SCAP[user.name]))
     return ConversationHandler.END
 
