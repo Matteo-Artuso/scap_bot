@@ -282,7 +282,7 @@ chi = ''
 giorno = ''
 SCAP = {}
 scap_coin_reset = 0
-scap_coin_giornalieri = 3
+scap_coin_giornalieri = 1
 
 # Create the Updater and pass it your bot token.
 updater = Updater(Token.token)
