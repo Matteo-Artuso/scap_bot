@@ -133,7 +133,7 @@ def scap(update: Update, context: CallbackContext):
             update.message.reply_text("SCAP COIN FINITI, se ne vuoi altri https://www.paypal.me/matteoartuso99")
             return
         if SCAP[user.name] == -10:
-            update.message.reply_text("CONGRATULAZIONI sei un COGLIONE, hai usato /scap il doppio delle volte del limite")
+            update.message.reply_text("CONGRATULAZIONI sei un COGLIONE")
             return
         if SCAP[user.name] < -1:
             return
