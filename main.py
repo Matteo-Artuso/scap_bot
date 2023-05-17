@@ -55,16 +55,16 @@ def error_handler(update: Update, context: CallbackContext):
     update_str = update.to_dict() if isinstance(update, Update) else str(update)
     message = (
         f'An exception was raised while handling an update\n'
-        # f'<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}'
-        # '</pre>\n\n'
-        # f'<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n'
-        # f'<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n'
+        f'<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}'
+        '</pre>\n\n'
+        f'<pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n'
+        f'<pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n'
         f'<pre>{html.escape(tb_string)}</pre>'
     )
 
     # Finally, send the message
     context.bot.send_message(chat_id='-845504008', text=message, parse_mode=ParseMode.HTML)
-    update.message.reply_text(text=message, parse_mode=ParseMode.HTML)
+    # update.message.reply_text(text=message, parse_mode=ParseMode.HTML)
     return ConversationHandler.END
 
 
