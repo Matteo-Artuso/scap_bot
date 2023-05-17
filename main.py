@@ -64,7 +64,7 @@ def error_handler(update: Update, context: CallbackContext):
 
     # Finally, send the message
     context.bot.send_message(chat_id='-845504008', text=message, parse_mode=ParseMode.HTML)
-    # update.message.reply_text(text=message, parse_mode=ParseMode.HTML)
+    update.message.reply_text(text="errore")
     return ConversationHandler.END
 
 
