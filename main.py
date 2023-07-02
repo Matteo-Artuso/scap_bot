@@ -328,7 +328,7 @@ dispatcher = updater.dispatcher
 scap_handler = ConversationHandler(
      entry_points=[CommandHandler("scap", scap, pass_job_queue=True)],
      states={
-         0: [MessageHandler(Filters.text & ~Filters.command, invia_immagine)],
+         0: [MessageHandler(Filters.text(['SI','NO']) & ~Filters.command, invia_immagine)],
          1: [MessageHandler(Filters.photo & ~Filters.command, salva_immagine)],
      },
      fallbacks=[CommandHandler('cancel', cancel)]
