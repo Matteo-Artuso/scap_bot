@@ -125,7 +125,7 @@ def telecom(update: Update, context: CallbackContext):
 
 
 def mongolo(update: Update, context: CallbackContext):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="/mongo@markovmongolinobot")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="piedini @markovmongolinobot")
 
 def scap(update: Update, context: CallbackContext):
     global scap_coin_reset
