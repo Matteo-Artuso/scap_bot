@@ -124,6 +124,9 @@ def telecom(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="@giu176 @riccardo17101907 @Befra22")
 
 
+def mongolo(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="/mongo@markovmongolinobot")
+
 def scap(update: Update, context: CallbackContext):
     global scap_coin_reset
     user = update.effective_user
@@ -344,6 +347,7 @@ dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("bergamo", bergamo))
 dispatcher.add_handler(CommandHandler("tessera", tessera))
 dispatcher.add_handler(CommandHandler("telecom", telecom))
+dispatcher.add_handler(CommandHandler("mongo", mongolo))
 dispatcher.add_handler(scap_handler)
 # dispatcher.add_handler(CommandHandler("aule_libere", aule_libere))
 # dispatcher.add_handler(CommandHandler("tessera", tessera))
