@@ -124,9 +124,6 @@ def telecom(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="@giu176 @riccardo17101907 @Befra22")
 
 
-def mongolo(update: Update, context: CallbackContext):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="piedini @markovmongolinobot")
-
 def scap(update: Update, context: CallbackContext):
     global scap_coin_reset
     user = update.effective_user
@@ -156,7 +153,7 @@ def scap(update: Update, context: CallbackContext):
     scap_img_list = listdir('cazzate/scap')
     img = random.choices(population=scap_img_list)
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=open('cazzate/scap/' + ''.join(img), 'rb'))
-    update.message.reply_text("SCAP COIN rimasti: " + str(SCAP[user.name]))
+#    update.message.reply_text("SCAP COIN rimasti: " + str(SCAP[user.name]))
     return ConversationHandler.END
 
 
@@ -347,7 +344,6 @@ dispatcher.add_handler(CommandHandler("heroku", heroku))
 dispatcher.add_handler(CommandHandler("bergamo", bergamo))
 dispatcher.add_handler(CommandHandler("tessera", tessera))
 dispatcher.add_handler(CommandHandler("telecom", telecom))
-dispatcher.add_handler(CommandHandler("mongolo", mongolo))
 dispatcher.add_handler(scap_handler)
 # dispatcher.add_handler(CommandHandler("aule_libere", aule_libere))
 # dispatcher.add_handler(CommandHandler("tessera", tessera))
