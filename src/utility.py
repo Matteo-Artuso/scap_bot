@@ -1,4 +1,7 @@
-orario = {
+# UTILITY
+WEEKDAY = ['LUN', 'MAR', 'MER', 'GIO', 'VEN', 'SAB', 'DOM']
+
+ORARIO = {
     'billy': {
         'LUN': {
             '14': '9.0.1 - elettronica',
