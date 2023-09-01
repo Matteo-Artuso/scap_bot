@@ -2,9 +2,7 @@ from src.bot import ScapBot
 
 CHAT_ID = '-1001831422326'
 DAILY_COINS = 1
-# ################################################################# #
-# #############TODO: inserire nel gitignore token.txt ############# #
-# ################################################################# #
+
 with open("token.txt") as token_file:
     TOKEN = token_file.readline()
 
