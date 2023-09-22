@@ -16,8 +16,7 @@ pip install --upgrade "git+https://github.com/Matteo-Artuso/scap_bot@<branch|tag
 
 ## Run Scap Bot
 
-Once the package is installed it can be run as a simple console command `scapbot`
-Write `scapbot --help` to get more info
+Once the package is installed it can be run as a simple console command `scapbot` (Write `scapbot --help` to get more info)
 
 ### Defaults
 
@@ -26,6 +25,26 @@ Write `scapbot --help` to get more info
 - The token is found inside a file named `token.txt` inside the folder where the command is run
 - ChatID is set to `-1001831422326`
 - Daily Coins = 1
+
+### Run with Script
+The Scapbot can be run as a script. Script Template:
+```python
+from scapbot import ScapBot
+import pathlib
+
+CHAT_ID = {chat id}
+DAILY_COINS = {daily coins}
+TOKEN = pathlib.Path({path to token file}).read_text()
+
+
+# ## START ## #
+if __name__ == '__main__':
+    scap_bot = ScapBot(TEST_CHAT_ID, DAILY_COINS, TOKEN)
+    application = scap_bot.get_updater()
+
+    # Start the Bot
+    application.run_polling()
+```
 
 ## Dev Setup
 
