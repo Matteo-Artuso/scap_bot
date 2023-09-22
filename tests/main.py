@@ -1,13 +1,11 @@
+import pathlib
 from scapbot import ScapBot
 
 
 CHAT_ID = '-1001831422326'
 TEST_CHAT_ID = '6184580723'
 DAILY_COINS = 1
-
-with open("tests/tests_token.txt") as token_file:
-    TOKEN = token_file.readline()
-
+TOKEN = pathlib.Path("tests/tests_token.txt").read_text()
 
 # ## START ## #
 if __name__ == '__main__':
