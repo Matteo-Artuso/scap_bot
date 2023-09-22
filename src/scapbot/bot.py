@@ -1,5 +1,5 @@
 from telegram import ReplyKeyboardMarkup, Update
-from telegram.ext.filters import Text, Document
+from telegram.ext.filters import Text, PHOTO
 from telegram.ext import ConversationHandler, CommandHandler, MessageHandler, ExtBot, ApplicationBuilder, ContextTypes
 from telegram import Message, Chat
 from pytz import timezone
@@ -49,7 +49,7 @@ class ScapBot:
         user_name = update.effective_user.name
         if await self.update_coins(user_name, update.message):
             if await self.leggendary_extraction(user_name, update.effective_chat, update.message, context.bot):
-                return ConversationHandler.END
+                return 0
 
             await self.send_photo(context.bot, update.effective_chat)
             await update.message.reply_text(f"SCAP COIN rimasti: {self.scap_dict[user_name]}")
@@ -62,8 +62,8 @@ class ScapBot:
         Returns:
             bool: True if the leggendary image was extracted otherwise returns False
         """
-        if random.randint(1, LEGGENDARY_DROP_RATE) != 1:
-            return False
+        # if random.randint(1, LEGGENDARY_DROP_RATE) != 1:
+        #     return False
 
         await bot.send_message(chat_id=chat.id, text="wooo leggendaria!")
         with open(LEGGENDARY_IMAGE, "rb") as photo_file:
@@ -97,8 +97,8 @@ class ScapBot:
         return ConversationHandler(
             entry_points=[CommandHandler("scap", self.scap)],
             states={
-                0: [MessageHandler(Text(["SI", "NO"]), handlers.invia_immagine)],  # type: ignore
-                1: [MessageHandler(Document.IMAGE, handlers.salva_immagine)],
+                0: [MessageHandler(Text(["SI", "NO"]), handlers.invia_immagine)],
+                1: [MessageHandler(PHOTO, handlers.salva_immagine)],
             },
             fallbacks=[CommandHandler("cancel", handlers.cancel)],
         )

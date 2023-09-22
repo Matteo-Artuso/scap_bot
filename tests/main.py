@@ -4,8 +4,8 @@ from scapbot import ScapBot
 
 CHAT_ID = '-1001831422326'
 TEST_CHAT_ID = '6184580723'
-DAILY_COINS = 1
-TOKEN = pathlib.Path("tests_token.txt").read_text()
+DAILY_COINS = 10
+TOKEN = pathlib.Path("tests/tests_token.txt").read_text()
 
 # ## START ## #
 if __name__ == '__main__':

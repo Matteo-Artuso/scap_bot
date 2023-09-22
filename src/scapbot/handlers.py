@@ -103,7 +103,7 @@ async def invia_immagine(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def salva_immagine(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message:
         file = await update.message.photo[-1].get_file()
-        path = str(file.download_to_drive())
+        path = str(await file.download_to_drive())
         dest = f"cazzate/scap/{path}"
         shutil.move(path, dest)
         await update.message.reply_text("Immagine salvata")
