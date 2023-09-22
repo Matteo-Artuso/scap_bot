@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=67"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scapbot"
+dynamic = ["version"]
+authors = [
+  { name="Matteo Beatrice", email="matteoe97@gmail.com" },
+  { name="Matteo Artuso" }
+]
+description = "Telegram ScapBot"
+readme = {file = "README.md", content-type = "text/markdown"}
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+  "python-telegram-bot>=20",
+  "pytz>=2023.3"
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "scapbot.__VERSION__"}
+
+[project.scripts]
+scapbot = "scapbot:console_run"
+
+[project.urls]
+"Homepage" = "https://github.com/Matteo-Artuso/scap_bot"
+"Bug Tracker" = "https://github.com/Matteo-Artuso/scap_bot/issues"
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
