@@ -40,7 +40,7 @@ class ScapBot:
             self.scap_coin_reset = True
             context.job_queue.run_daily(
                 self.reset_scap_coin,
-                datetime.time(hour=15, minute=35, tzinfo=timezone("Europe/Rome")),
+                datetime.time(hour=8, minute=0, tzinfo=timezone("Europe/Rome")),
                 days=(0, 1, 2, 3, 4, 5, 6),
                 chat_id=update.message.chat_id,
             )
