@@ -2,8 +2,8 @@ import pathlib
 from scapbot import ScapBot
 
 
-CHAT_ID = '-1001831422326'
-TEST_CHAT_ID = '6184580723'
+CHAT_ID = '-1831422326'
+TEST_CHAT_ID = '-845504008'
 DAILY_COINS = 1
 TOKEN = pathlib.Path("tests_token.txt").read_text()
 
