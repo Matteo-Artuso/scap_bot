@@ -3,7 +3,7 @@ utile/aule_libere.txt
 utile/tessera.txt
 cazzate
 .vscode
-token.txt
+*token.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

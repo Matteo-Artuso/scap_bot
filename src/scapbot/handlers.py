@@ -1,14 +1,13 @@
-from telegram import Update, ParseMode, ReplyKeyboardRemove
-from telegram.ext import CallbackContext, ConversationHandler
-from typing import Callable
+from telegram import Update, ReplyKeyboardRemove
+from telegram.constants import ParseMode
+from telegram.ext import ConversationHandler, ContextTypes
 import html, json, traceback, shutil
 
 
 # BOT HANDLERS FUNCTIONS
-def error_handler(update: object, context: CallbackContext):
-    if not context.error or not isinstance(update, Update):
+async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE):
+    if not context.error or not isinstance(update, Update) or not update.message:
         return
-        # return ConversationHandler.END
 
     # traceback.format_exception returns the usual python message about an exception, but as a
     # list of strings rather than a single string, so we have to join them together.
@@ -26,96 +25,98 @@ def error_handler(update: object, context: CallbackContext):
         <pre>{html.escape(tb_string)}</pre>"""
 
     # Finally, send the message
-    context.bot.send_message(chat_id="-845504008", text=message, parse_mode=ParseMode.HTML)
-    update.message.reply_text("errore")
-    # return ConversationHandler.END
+    await context.bot.send_message(chat_id="-845504008", text=message, parse_mode=ParseMode.HTML)
+    await update.message.reply_text("errore")
+    return
 
 
-def start(update: Update, context: CallbackContext):
-    if update.effective_user:
-        update.message.reply_text(f"Hi {update.effective_user.first_name}!")
+def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.effective_user and update.message:
+        return update.message.reply_text(f"Hi {update.effective_user.first_name}!")
 
 
-def barletz(update: Update, context: CallbackContext):
+async def barletz(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_chat:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="ma ti dai fuoco")
-        context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F525")
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="ma ti dai fuoco")
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F525")
 
 
-def balez(update: Update, context: CallbackContext):
+async def balez(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_chat:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="__balez__")
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="__balez__")
 
 
-def arco(update: Update, context: CallbackContext):
+async def arco(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_chat:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="in-che-senso")
-        context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F921")
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="in-che-senso")
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F921")
 
 
-def lucio(update: Update, context: CallbackContext):
+async def lucio(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_chat:
         with open("cazzate/lucio.mp3", "rb") as audio_file:
-            context.bot.send_audio(chat_id=update.effective_chat.id, audio=audio_file)
+            await context.bot.send_audio(chat_id=update.effective_chat.id, audio=audio_file)
 
 
-def giorgio(update: Update, context: CallbackContext):
+async def giorgio(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_chat:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F441\U0001F444\U0001F441")
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F441\U0001F444\U0001F441")
 
 
-def billy(update: Update, context: CallbackContext):
+async def billy(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_chat:
-        context.bot.send_message(
+        await context.bot.send_message(
             chat_id=update.effective_chat.id, text="Chiedere può essere la vergogna di un minuto, non chiedere il rimpianto di una vita. Mi fai assaggiare?"
         )
 
 
-def heroku(update: Update, context: CallbackContext):
+async def heroku(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_chat:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F4A9")
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F4A9")
 
 
-def bergamo(update: Update, context: CallbackContext):
+async def bergamo(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_chat:
         with open("cazzate/bergamo.jpeg", "rb") as photo_file:
-            context.bot.send_photo(chat_id=update.effective_chat.id, photo=photo_file)
+            await context.bot.send_photo(chat_id=update.effective_chat.id, photo=photo_file)
 
 
-def tessera(update: Update, context: CallbackContext):
+async def tessera(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_chat:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="F for tessera")
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="F for tessera")
 
 
-def telecom(update: Update, context: CallbackContext):
+async def telecom(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_chat:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="@giu176 @riccardo17101907 @Befra22")
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="@giu176 @riccardo17101907 @Befra22")
 
 
-def invia_immagine(update: Update, context: CallbackContext):
-    if update.message.text == "SI":
-        update.message.reply_text("Manda l'immagine", reply_markup=ReplyKeyboardRemove())
-        return 1
-    update.message.reply_text("Menomale", reply_markup=ReplyKeyboardRemove())
+async def invia_immagine(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message:
+        if update.message.text == "SI":
+            await update.message.reply_text("Manda l'immagine", reply_markup=ReplyKeyboardRemove())
+            return 1
+        await update.message.reply_text("Menomale", reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
 
 
-def salva_immagine(update: Update, context: CallbackContext):
-    file = update.message.photo[-1].get_file()
-    path = str(file.download())
-    dest = f"cazzate/scap/{path}"
-    shutil.move(path, dest)
-    update.message.reply_text("Immagine salvata")
+async def salva_immagine(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message:
+        file = await update.message.photo[-1].get_file()
+        path = str(file.download_to_drive())
+        dest = f"cazzate/scap/{path}"
+        shutil.move(path, dest)
+        await update.message.reply_text("Immagine salvata")
     return ConversationHandler.END
 
 
-def cancel(update: Update, context: CallbackContext):
+async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_message:
-        update.effective_message.reply_text("command canceled", reply_markup=ReplyKeyboardRemove())
+        await update.effective_message.reply_text("command canceled", reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
 
 
-COMMANDS: list[tuple[str, Callable]] = [
+COMMANDS = [
     ("start", start),
     ("barletz", barletz),
     ("balez", balez),
@@ -130,13 +131,13 @@ COMMANDS: list[tuple[str, Callable]] = [
 ]
 
 
-# def tessera(update: Update, context: CallbackContext):
+# def tessera(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #     with open('utile/tessera.txt') as f:
 #         text = f.read()
 #     context.bot.send_message(chat_id=update.effective_chat.id, text=f"the one to rule them all ce l'ha {text}")
 
 
-# def aule_libere_update(update: Update, context: CallbackContext):
+# def aule_libere_update(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #     user = update.effective_user
 #     if user.name == '@Artuzzo' or user.name == '@giu176' or user.name == '@andrebarl':
 #         with open('utile/aule_libere.txt') as f:
@@ -150,7 +151,7 @@ COMMANDS: list[tuple[str, Callable]] = [
 #     return ConversationHandler.END
 
 
-# def aule_libere_updated(update: Update, context: CallbackContext):
+# def aule_libere_updated(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #     user = update.effective_user
 #     with open('utile/aule_libere.txt', 'w') as f:
 #         f.write(update.message.text)
@@ -158,13 +159,13 @@ COMMANDS: list[tuple[str, Callable]] = [
 #     return ConversationHandler.END
 
 
-# def dov_e_ora(update: Update, context: CallbackContext):
+# def dov_e_ora(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #     keyboard = [['billy'], ['giulio'], ['barletz']]
 #     update.message.reply_text("chi vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
 #     return 0
 
 
-# def ora(update: Update, context: CallbackContext):
+# def ora(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #     giorno_ora = num_to_weekday(datetime.datetime.today().weekday())
 #     now = datetime.datetime.now(timezone('Europe/Rome'))
 #     if giorno_ora not in orari.orario[update.message.text].keys():
@@ -177,13 +178,13 @@ COMMANDS: list[tuple[str, Callable]] = [
 #     return ConversationHandler.END
 
 
-# def dove_sara(update: Update, context: CallbackContext):
+# def dove_sara(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #     keyboard = [['billy'], ['giulio'], ['barletz']]
 #     update.message.reply_text("chi vuoi sapere dov'è?", reply_markup=ReplyKeyboardMarkup(keyboard, one_time_keyboard=True, selective=True))
 #     return 0
 
 
-# def che_giorno(update: Update, context: CallbackContext):
+# def che_giorno(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #     global chi
 #     chi = update.message.text
 #     keyboard = [['oggi'], ['LUN'], ['MAR'], ['MER'], ['GIO'], ['VEN']]
@@ -191,7 +192,7 @@ COMMANDS: list[tuple[str, Callable]] = [
 #     return 1
 
 
-# def che_ora(update: Update, context: CallbackContext):
+# def che_ora(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #     global giorno
 #     if update.message.text == 'oggi':
 #         giorno = num_to_weekday(datetime.datetime.today().weekday())
@@ -205,7 +206,7 @@ COMMANDS: list[tuple[str, Callable]] = [
 #     return 2
 
 
-# def sara(update: Update, context: CallbackContext):
+# def sara(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #     global chi, giorno
 #     now = update.message.text
 #     if now not in orari.orario[chi][giorno].keys():
@@ -217,12 +218,12 @@ COMMANDS: list[tuple[str, Callable]] = [
 #     return ConversationHandler.END
 
 
-# def tessera_update(update: Update, context: CallbackContext):
+# def tessera_update(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #     update.effective_message.reply_text("chi ha ora LA tessera?")
 #     return 0
 
 
-# def tessera_updated(update: Update, context: CallbackContext):
+# def tessera_updated(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #     user = update.effective_user
 #     with open('utile/tessera.txt') as f:
 #         propietario_old = f.read()
@@ -232,7 +233,7 @@ COMMANDS: list[tuple[str, Callable]] = [
 #     return ConversationHandler.END
 
 
-# def aule_libere(update: Update, context: CallbackContext):
+# def aule_libere(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #     with open('utile/aule_libere.txt') as f:
 #         text = f.read()
 #     if text == "":

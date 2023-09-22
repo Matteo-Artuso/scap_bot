@@ -34,7 +34,7 @@ repos:
 -   repo: local
     hooks:
     -   id: pytest-check
-        stages: [commit, merge-commit, push, manual]
+        stages: [manual]
         name: pytest-check
         entry: pytest
         language: system

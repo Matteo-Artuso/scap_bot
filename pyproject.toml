@@ -18,7 +18,7 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-  "python-telegram-bot==13.11"
+  "python-telegram-bot>=20"
 ]
 
 [tool.setuptools.dynamic]
