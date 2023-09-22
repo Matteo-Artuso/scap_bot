@@ -2,7 +2,7 @@
 
 ## Install Scap Bot
 
-Install the `scapbot` package by running the command:
+Install the `scapbot` package with:
 
 ```cmd
 pip install --upgrade "git+https://github.com/Matteo-Artuso/scap_bot#egg=scapbot"
