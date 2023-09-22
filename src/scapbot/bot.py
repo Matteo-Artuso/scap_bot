@@ -116,36 +116,3 @@ class ScapBot:
         application.add_error_handler(handlers.error_handler)
 
         return application
-
-
-# handlers
-# aule_libere_update_handler = ConversationHandler(
-#     entry_points=[CommandHandler("aule_libere_update", aule_libere_update)],
-#     states={
-#         0: [MessageHandler(Filters.text & ~Filters.command, aule_libere_updated)],
-#     },
-#     fallbacks=[CommandHandler('cancel', cancel)]
-# )
-# dov_e_ora_handler = ConversationHandler(
-#     entry_points=[CommandHandler("dov_e_ora", dov_e_ora)],
-#     states={
-#         0: [MessageHandler(Filters.text & ~Filters.command, ora)],
-#     },
-#     fallbacks=[CommandHandler('cancel', cancel)]
-# )
-# dove_sara_handler = ConversationHandler(
-#     entry_points=[CommandHandler("dove_sara", dove_sara)],
-#     states={
-#         0: [MessageHandler(Filters.text & ~Filters.command, che_giorno)],
-#         1: [MessageHandler(Filters.text & ~Filters.command, che_ora)],
-#         2: [MessageHandler(Filters.text & ~Filters.command, sara)],
-#     },
-#     fallbacks=[CommandHandler('cancel', cancel)]
-# )
-# tessera_handler = ConversationHandler(
-#     entry_points=[CommandHandler("tessera_update", tessera_update)],
-#     states={
-#         0: [MessageHandler(Filters.text & ~Filters.command, tessera_updated)],
-#     },
-#     fallbacks=[CommandHandler('cancel', cancel)]
-# )

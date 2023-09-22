@@ -32,7 +32,7 @@ async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE):
 
 def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user and update.message:
-        return update.message.reply_text(f"Hi {update.effective_user.first_name}!", reply_markup=ReplyKeyboardRemove())
+        return update.message.reply_text(f"Hi {update.effective_user.first_name}!")
 
 
 async def barletz(update: Update, context: ContextTypes.DEFAULT_TYPE):
