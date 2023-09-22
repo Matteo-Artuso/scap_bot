@@ -3,11 +3,11 @@ import argparse, os
 from .bot import ScapBot
 
 
-CHAT_ID = "-1001831422326"
-TEST_CHAT_ID = "6184580723"
+CHAT_ID = "-1831422326"
+TEST_CHAT_ID = "-845504008"
 DEFAULT_DAILY_COINS = 1
 DEFAULT_TOKEN_PATH = "token.txt"
-DEFAULT_TEST_TOKEN_PATH = "tests/tests_token.txt"
+DEFAULT_TEST_TOKEN_PATH = "tests_token.txt"
 
 
 def local_run(token_path: str, chat_id: str, daily_coins: int):

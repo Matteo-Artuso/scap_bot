@@ -93,9 +93,12 @@ async def telecom(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def invia_immagine(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message:
-        if update.message.text == "SI":
-            await update.message.reply_text("Manda l'immagine", reply_markup=ReplyKeyboardRemove())
-            return 1
+        await update.message.reply_text("Manda l'immagine", reply_markup=ReplyKeyboardRemove())
+        return 1
+
+
+async def rifiuta_invia_immagine(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message:
         await update.message.reply_text("Menomale", reply_markup=ReplyKeyboardRemove())
     return ConversationHandler.END
 

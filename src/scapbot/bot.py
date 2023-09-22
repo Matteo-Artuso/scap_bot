@@ -1,13 +1,13 @@
 from telegram import ReplyKeyboardMarkup, Update
-from telegram.ext.filters import Text, PHOTO
-from telegram.ext import ConversationHandler, CommandHandler, MessageHandler, ExtBot, ApplicationBuilder, ContextTypes
+from telegram.ext import ConversationHandler, CommandHandler, MessageHandler, ExtBot, ApplicationBuilder, ContextTypes, filters
 from telegram import Message, Chat
 from pytz import timezone
-import random, datetime, os, logging
+import random, datetime, os, logging, sys
 
 from . import handlers
 
 
+logging.StreamHandler(sys.stdout)
 LEGGENDARY_DROP_RATE = 10
 LEGGENDARY_IMAGE = "cazzate/magni.jpeg"
 KEYBOARD = [["SI"], ["NO"]]
@@ -22,6 +22,7 @@ class ScapBot:
         self.daily_coin: int = daily_coin
         self.token = token
         self.logger = logging.getLogger(self.chat_id)
+        self.logger.setLevel(logging.DEBUG)
 
     def reset_scap_coin(self, context: ContextTypes.DEFAULT_TYPE):
         """Clears scap_dict and resets scap coins count"""
@@ -35,6 +36,8 @@ class ScapBot:
 
         if not update.message:
             return ConversationHandler.END
+
+        self.logger.info("Launching `scap` command")
 
         if not self.scap_coin_reset and context.job_queue:
             self.scap_coin_reset = True
@@ -62,8 +65,8 @@ class ScapBot:
         Returns:
             bool: True if the leggendary image was extracted otherwise returns False
         """
-        # if random.randint(1, LEGGENDARY_DROP_RATE) != 1:
-        #     return False
+        if random.randint(1, LEGGENDARY_DROP_RATE) != 1:
+            return False
 
         await bot.send_message(chat_id=chat.id, text="wooo leggendaria!")
         with open(LEGGENDARY_IMAGE, "rb") as photo_file:
@@ -97,16 +100,18 @@ class ScapBot:
         return ConversationHandler(
             entry_points=[CommandHandler("scap", self.scap)],
             states={
-                0: [MessageHandler(Text(["SI", "NO"]), handlers.invia_immagine)],
-                1: [MessageHandler(PHOTO, handlers.salva_immagine)],
+                0: [MessageHandler(filters.Regex(r'SI'), handlers.invia_immagine), MessageHandler(filters.Regex(r'NO'), handlers.rifiuta_invia_immagine)],
+                1: [MessageHandler(filters.PHOTO, handlers.salva_immagine)],
             },
             fallbacks=[CommandHandler("cancel", handlers.cancel)],
+            per_user=True,
+            per_chat=False
         )
 
     def get_updater(self):
         """Returns the Updater used to run this instance of the Bot"""
         # Create the Updater and pass it your bot token.
-        application = ApplicationBuilder().token(self.token).build()
+        application = ApplicationBuilder().token(self.token).concurrent_updates(False).build()
 
         # Get the dispatcher to register handlers
         for command in handlers.COMMANDS:
