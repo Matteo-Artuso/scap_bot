@@ -6,7 +6,7 @@ CHAT_ID = '-1831422326'
 TEST_CHAT_ID = '-845504008'
 BEATRICE_TEST_CHAT_ID = '6184580723'
 DAILY_COINS = 1
-TOKEN = pathlib.Path("test_token.txt").read_text()
+TOKEN = pathlib.Path("test_token.txt").read_text().strip()
 
 # ## START ## #
 if __name__ == '__main__':
