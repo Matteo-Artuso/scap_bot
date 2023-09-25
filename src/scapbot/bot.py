@@ -89,7 +89,7 @@ class ScapBot:
             await message.reply_text("SCAP COIN FINITI, se ne vuoi altri https://www.paypal.me/matteoartuso99")
             return False
 
-        if self.scap_dict[user_name] <= -10:
+        if self.scap_dict[user_name] == -10:
             await message.reply_text("CONGRATULAZIONI sei un COGLIONE")
             return False
 
