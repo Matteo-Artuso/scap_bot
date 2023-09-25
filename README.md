@@ -48,7 +48,7 @@ if __name__ == '__main__':
     application = scap_bot.get_updater()
 
     # Start the Bot
-    application.run_polling()
+    application.run_polling(allowed_updates=Update.ALL_TYPES)
 ```
 
 ## Dev Setup
