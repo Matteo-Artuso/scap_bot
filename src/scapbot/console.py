@@ -1,5 +1,6 @@
 from . import __VERSION__
 import argparse, os
+import pathlib
 from .bot import ScapBot
 
 
@@ -15,9 +16,7 @@ def local_run(token_path: str, chat_id: str, daily_coins: int):
     print(f"Token Path: {token_path}")
     print(f"Chat ID: {chat_id}")
     print(f"Daily Coins: {daily_coins}")
-    with open(token_path) as token_file:
-        token = token_file.readline()
-
+    token = pathlib.Path(token_path).read_text().strip()
     scap_bot = ScapBot(chat_id, daily_coins, token)
     application = scap_bot.get_updater()
 
