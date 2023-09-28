@@ -2,7 +2,7 @@ import pathlib
 from scapbot import ScapBot
 from telegram import Update
 
-CHAT_ID = '-1831422326'
+CHAT_ID = '-1001831422326'
 TEST_CHAT_ID = '-845504008'
 BEATRICE_TEST_CHAT_ID = '6184580723'
 DAILY_COINS = 1
