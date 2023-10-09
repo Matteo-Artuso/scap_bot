@@ -4,7 +4,7 @@ import pathlib
 from .bot import ScapBot
 
 
-CHAT_ID = "-1831422326"
+CHAT_ID = "-1001831422326"
 TEST_CHAT_ID = "-845504008"
 DEFAULT_DAILY_COINS = 1
 DEFAULT_TOKEN_PATH = "token.txt"
