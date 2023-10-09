@@ -41,9 +41,11 @@ async def barletz(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(chat_id=update.effective_chat.id, text="\U0001F525")
 
 
-async def balez(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def epi_birsdei(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_chat:
-        await context.bot.send_message(chat_id=update.effective_chat.id, text="__balez__")
+        with open("cazzate/epi_birsdei.mp4", "rb") as video_file:
+            await context.bot.send_video(chat_id=update.effective_chat.id, video=video_file)
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="epi birsdei baleza")
 
 
 async def arco(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -122,7 +124,7 @@ async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
 COMMANDS = [
     ("start", start),
     ("barletz", barletz),
-    ("balez", balez),
+    ("epi_birsdei", epi_birsdei),
     ("arco", arco),
     ("lucio", lucio),
     ("giorgio", giorgio),
