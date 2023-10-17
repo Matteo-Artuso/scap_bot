@@ -31,6 +31,42 @@ Once the package is installed it can be run as a simple console command `scapbot
 - ChatID is set to `-1831422326`
 - Daily Coins = 1
 
+### Run with a systemd service on Linux
+If you are running scapbot on Linux is raccomended that you use a systemd service.
+
+Create a new file, `/etc/systemd/system/scapbot.service`, and edit it with the appropriate permissions and text editor of your choice, for example:
+```cmd
+sudo nano /etc/systemd/system/scapbot.service
+```
+
+Save the file with the following content. You may modify the service as-needed to better suit your configuration, `WorkingDirectory` must contain the `token.txt` file and the `venv` directory where you installed the `scapbot` command.
+```
+[Unit]
+Description=Scapbot Service
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/scap
+ExecStart=/home/scap/venv/bin/python /home/scap/venv/bin/scapbot
+User=scap
+Group=scap
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then run `sudo systemctl daemon-reload` to update the service manager.
+
+#### Controlling the service
+
+* Start the service: `sudo systemctl start scapbot`
+* Check service status: `systemctl status scapbot`
+*  To see full log output: `sudo journalctl -u scapbot.service`
+* Stop the service: `sudo systemctl stop scapbot`
+* Enable it to start up on boot: `sudo systemctl enable scapbot`
+* To disable: `sudo systemctl disable scapbot`. It simply disables automatic startup of the scapbot service.
+
 ### Run with Script
 The Scapbot can be run as a script. Script Template:
 ```python
