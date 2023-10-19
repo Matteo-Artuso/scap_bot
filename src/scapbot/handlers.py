@@ -95,6 +95,11 @@ async def telecom(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await context.bot.send_message(chat_id=update.effective_chat.id, text="@giu176 @riccardo17101907 @Befra22")
 
 
+async def aule_libere(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.effective_chat:
+        await context.bot.send_message(chat_id=update.effective_chat.id, text="Soragraria")
+
+
 async def invia_immagine(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message:
         await update.message.reply_text("Manda l'immagine", reply_markup=ReplyKeyboardRemove())
@@ -135,6 +140,7 @@ COMMANDS = [
     ("bergamo", bergamo),
     ("tessera", tessera),
     ("telecom", telecom),
+    ("aule_libere", aule_libere),
 ]
 
 # def tessera(update: Update, context: ContextTypes.DEFAULT_TYPE):
