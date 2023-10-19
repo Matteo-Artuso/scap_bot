@@ -1,35 +1,14 @@
+import html
+import json
+import shutil
+import traceback
+
 from telegram import Update, ReplyKeyboardRemove
 from telegram.constants import ParseMode
 from telegram.ext import ConversationHandler, ContextTypes
-import html, json, traceback, shutil
 
 
 # BOT HANDLERS FUNCTIONS
-async def error_handler(update: object, context: ContextTypes.DEFAULT_TYPE):
-    if not context.error or not isinstance(update, Update) or not update.message:
-        return
-
-    # traceback.format_exception returns the usual python message about an exception, but as a
-    # list of strings rather than a single string, so we have to join them together.
-    tb_list = traceback.format_exception(None, context.error, context.error.__traceback__)
-    tb_string = "".join(tb_list)
-
-    # Build the message with some markup and additional information about what happened.
-    # You might need to add some logic to deal with messages longer than the 4096 character limit.
-    update_str = update.to_dict() if isinstance(update, Update) else str(update)
-    message = f"""An exception was raised while handling an update\n
-        <pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}
-        </pre>\n\n
-        <pre>context.chat_data = {html.escape(str(context.chat_data))}</pre>\n\n
-        <pre>context.user_data = {html.escape(str(context.user_data))}</pre>\n\n
-        <pre>{html.escape(tb_string)}</pre>"""
-
-    # Finally, send the message
-    await context.bot.send_message(chat_id="-845504008", text=message, parse_mode=ParseMode.HTML)
-    await update.message.reply_text("errore")
-    return
-
-
 def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.effective_user and update.message:
         return update.message.reply_text(f"Hi {update.effective_user.first_name}!", reply_markup=ReplyKeyboardRemove())
