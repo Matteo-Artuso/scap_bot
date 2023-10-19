@@ -89,7 +89,7 @@ class ScapBot:
 
         user_name = update.effective_user.name
         if await self.update_coins(user_name, update.message):
-            if await self.leggendary_extraction(user_name, update.effective_chat, update.message, context.bot):
+            if await self.legendary_extraction(user_name, update.effective_chat, update.message, context.bot):
                 return 0
 
             await self.send_photo(context.bot, update.effective_chat)
@@ -97,7 +97,7 @@ class ScapBot:
 
         return ConversationHandler.END
 
-    async def leggendary_extraction(self, user_name: str, chat: Chat, message: Message, bot: ExtBot):
+    async def legendary_extraction(self, user_name: str, chat: Chat, message: Message, bot: ExtBot):
         """Extecutes the Leggendary image extraction
 
         Returns:
