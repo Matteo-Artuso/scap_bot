@@ -1,10 +1,6 @@
-import html
-import json
 import shutil
-import traceback
 
 from telegram import Update, ReplyKeyboardRemove
-from telegram.constants import ParseMode
 from telegram.ext import ConversationHandler, ContextTypes
 
 
